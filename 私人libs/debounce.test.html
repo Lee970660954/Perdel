@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>函数防抖</title>
+    <style>
+        html,body{
+            height: 100%;
+        }
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .conatiner{
+            height: 10000px;
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+    <div class="conatiner"></div>
+    <script>
+        function debounce(handler, interval){
+            let timer;
+            let args = arguments;
+            return function(){
+                clearTimeout(timer);
+                timer = setTimeout(() => {
+                    handler.call(this, args);
+                }, interval || 500);
+            }
+        }
+        function debounceHandler(){
+            // 滚动条在Y轴上的滚动距离
+            let scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+            // 文档的总高度
+            let scrollHeight = document.body.scrollHeight || document.documentElement.scrollHeight;
+            // 浏览器视窗的高度
+            let windowHeight = document.body.clientHeight || document.documentElement.clientHeight;
+            if(scrollTop + windowHeight >= scrollHeight - 100){
+                console.log('达到触底要求', scrollTop);
+            }else{
+                console.log('未达到触底要求', scrollTop);
+            }
+        }
+        let debounceInterval = 500;
+        window.onscroll = debounce(debounceHandler, debounceInterval);
+    </script>
+</body>
+</html>

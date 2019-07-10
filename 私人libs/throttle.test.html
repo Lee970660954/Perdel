@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>函数截流</title>
+    <style>
+        html,body{
+            height: 100%;
+        }
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .conatiner{
+            height: 10000px;
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+    <div class="conatiner"></div>
+    <script>
+        function throttle(handler, interval){
+            let timer;
+            let isFirst = true;
+            let args = arguments;
+
+            if(isFirst){
+                handler.call(this, args);
+                isFirst = false;
+            }
+            
+            if(timer){
+                return false;
+            }
+
+            return function (){
+                clearTimeout(timer);
+                setTimeout(() => {
+                    handler.call(this, args);
+                }, interval || 500)
+            }
+        }
+
+        function throttleHandler(){
+            console.log('throttleHandler');
+        }
+
+        window.onscroll = throttle(throttleHandler, 5000);
+        // function throttle(fn, interval) {
+        //     var _self = fn // 保存需要被延迟执行的函数引用
+        //     var firstTime = true // 是否初次调用
+        //     var timer // 定时器
+
+        //     return function() {
+        //         var args = arguments
+        //         var _me = this
+        //         if (firstTime) {
+        //         // 如果是第一次调用不需要延迟执行
+        //         _self.call(_me, args)
+        //         }
+
+        //         if (timer) {
+        //         // 如果定时器还在，说明前一次延迟执行还没有完成
+        //         return false
+        //         }
+
+        //         timer = setTimeout(function() {
+        //         // 延迟一段时间执行
+        //         clearTimeout(timer) // 清除定时器 避免下一次return false
+        //         timer = null
+        //         _self.call(_me, args)
+        //         }, interval)
+        //     }
+        // }
+    </script>
+</body>
+</html>
