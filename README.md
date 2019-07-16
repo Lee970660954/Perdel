@@ -26,3 +26,7 @@ JavaScript基础
     throttle.js
     throttle.test.html
     isIphoneX+.js
+
+2019-07-16
+JavaScript基础
+    3.substr和substring的用法和区别
