@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue双向数据绑定原理剖析2</title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="text">
+        {{text}}
+    </div>
+    <script>
+        function nodeToFragment (node) {
+            let fragment = document.createDocumentFragment(),
+                child;
+            while (child = node.firstChild) {
+                fragment.appendChild(child);
+            }
+            return fragment;
+        }
+        let node = document.getElementById("app"),
+            fragmentEx;
+        console.log("node1", node);
+        fragmentEx = nodeToFragment(node);
+        console.log("fragmentEx", fragmentEx);
+        console.log("node2", node);
+    </script>
+</body>
+</html>

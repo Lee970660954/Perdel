@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue双向数据绑定原理剖析3</title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="text">
+        {{text}}
+    </div>
+    <script>
+        function compile (node, vm) {
+            // 匹配文本节点里需要替换的内容
+            let reg = /\{\{(.*)\}\}/;
+            // 元素节点
+            if (node.nodeType == 1) {
+                // 获取元素节点的所有属性
+                let attrs = node.attributes,
+                    name;
+                // 解析元素节点的所有属性
+                for (let i = 0; i < attrs.length; i++) {
+                    if (attrs[i].nodeName == "v-model") {
+                        // 获取与vm.data中相关的字段
+                        name = attrs[i].nodeValue;
+                        // 将vm.data中相关的字段的值赋予元素节点
+                        node.value = vm.data[name];
+                        // 删除元素节点的v-model属性
+                        node.removeAttribute("v-model");
+                    }
+                }
+
+            }
+
+            // 文本节点
+            if (node.nodeType == 3) {
+                if (reg.test(node.nodeValue)) {
+                    // 获取到匹配的字符串
+                    let name = RegExp.$1.trim();
+                    // 将data中相关的字段的值赋予文本节点
+                    node.nodeValue = vm.data[name];
+                }
+            }
+        }
+
+        function nodeToFragment (node, vm) {
+            let fragment = document.createDocumentFragment(),
+                child;
+            while (child = node.firstChild) {
+                compile(child, vm);
+                fragment.appendChild(child);
+            }
+            return fragment;
+        };
+
+        // Vue构造函数
+        function Vue (options) {
+            this.data = options.data;
+            let id = options.el,
+                dom = nodeToFragment(document.getElementById(id), this);
+            //处理完所有dom节点后，重新将内容添加回去
+            document.getElementById(id).appendChild(dom);
+        }
+
+        var vm = new Vue({
+            el: "app",
+            data: {
+                text: "111"
+            }
+        })
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue双向数据绑定原理剖析1</title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" id="a" />
+        <span id="b"></span>
+    </div>
+    <script>
+        let obj = {},
+            value = "hello world";
+        Object.defineProperty(obj, "value", {
+            get: () => {
+                console.log("调用了get方法", value);
+                return value;
+            },
+            set: (newVal) => {
+                console.log("调用了set方法", newVal);
+                value = newVal;
+                document.getElementById("a").value = value;
+                document.getElementById("b").innerHTML = value;
+            }
+        });
+        document.addEventListener("keyup", (e) => {
+            obj.value = e.target.value;
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue数据双向绑定原理剖析5</title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="text">
+        {{text}}
+    </div>
+    <script>
+        let sub1 = {
+            update: () => {
+                console.log(1);
+            }
+        },
+        sub2 = {
+            update: () => {
+                console.log(2);
+            }
+        },
+        sub3 = {
+            update: () => {
+                console.log(3);
+            }
+        },
+        dep = new Dep(),
+        pub = {
+            publish: function () {
+                dep.notify();
+            }
+        };
+        function Dep () {
+            this.subs = [sub1, sub2, sub3];
+        }
+        Dep.prototype.notify = function () {
+            console.log(this);
+            this.subs.forEach(sub => {
+                sub.update();
+            })
+        }
+        pub.publish();
+    </script>
+</body>
+</html>
