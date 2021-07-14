@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二分查找算法</title>
+</head>
+<body>
+    <script>
+        let arr = [2, 3, 4, 5, 15, 19, 26, 27, 36, 38, 44, 46, 47, 48, 50];
+        // 非递归
+        // function binarySearch (arr, target) {
+        //     let start = 0,
+        //         end = arr.length - 1,
+        //         mid = Math.floor((start + end)/2);
+        //     while (start < end) {
+        //         if (arr[mid] < target) {
+        //             start = mid + 1;
+        //         } else if (arr[mid] > target) {
+        //             end = mid - 1;
+        //         } else {
+        //             return mid;
+        //         }
+        //         mid = Math.floor((start + end)/2);
+        //     }
+        //     if (arr[start] === target) {
+        //         return start;
+        //     } else {
+        //         return null;
+        //     }
+        // }
+        // 递归
+        function binarySearch (arr, target, s = 0, e = arr.length - 1) {
+            let start = s,
+                end = e,
+                mid = Math.floor((start + end)/2);
+            if (start < end) {
+                if (arr[mid] === target) {
+                    return mid;
+                } else if (arr[mid] < target) {
+                    start = mid + 1;
+                } else {
+                    end = mid - 1;
+                }
+                return binarySearch(arr, target, start, end);
+            } else {
+                if (arr[start] === target) {
+                    return start;
+                } else {
+                    return null;
+                }
+            }
+        }
+        let result = binarySearch(arr, 50);
+        console.log("binarySearch result: ", result);
+    </script>
+</body>
+</html>

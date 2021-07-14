@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>原生JS实现Promise和链式调用then方法</title>
+</head>
+<body>
+    <script>
+        // 定义_Promise的三种状态
+        const PENDING = "pending",// 等待
+            FULFILLED = "fulfilled",// 成功
+            REJECTED = "rejected";// 失败
+        
+        class _Promise {
+            constructor (func) {
+                this.status = PENDING;
+                this.data = null;
+                this.error = null;
+                this.fulfilledCallback = [];
+                this.rejectedCallback = [];
+                func(this.resolve.bind(this), this.reject.bind(this));
+            }
+        }
+
+        _Promise.prototype.resolve = function (data) {
+            if (this.status === PENDING) {
+                setTimeout(() => {
+                    this.data = data;
+                    this.status = FULFILLED;
+                    this.fulfilledCallback.length && this.fulfilledCallback.map(item => {
+                        item(this.data);
+                        // const newData = item(this.data) || null;
+                        // if (newData) {
+                        //     this.data = newData;
+                        // }
+                    });
+                });
+            }
+        }
+
+        _Promise.prototype.reject = function (error) {
+            if (this.status === PENDING) {
+                setTimeout(() => {
+                    this.error = error;
+                    this.status = REJECTED;
+                    this.rejectedCallback.length && this.rejectedCallback.map(item => {
+                        item(this.error)
+                        // const newError = item(this.error) || null;
+                        // if (newError) {
+                        //     this.error = newError;
+                        // }
+                    });
+                });
+            }
+        }
+
+        _Promise.prototype.then = function (fulfilledCallback, rejectedCallback) {
+            if (this.status === PENDING) {
+                this.fulfilledCallback.push(fulfilledCallback);
+                this.rejectedCallback.push(rejectedCallback);
+            }
+            return this;
+        }
+
+        const _promise = new _Promise((resolve, reject) => {
+            resolve("data1");
+            // reject("error1");
+        })
+        _promise.then(data => {
+            console.log("then1", data);
+            return new _Promise((resolve, reject) => {
+                resolve("data11");
+            })
+            // return "data2";
+        }, error => {
+            console.log("then1", error);
+            return "error2";
+        }).then(data => {
+            console.log("then2", data);
+            return "data3";
+        }, error => {
+            console.log("then2", error);
+            return "error3";
+        }).then(data => {
+            console.log("then3", data);
+        }, error => {
+            console.log("then3", error);
+        })
+    </script>
+</body>
+</html>

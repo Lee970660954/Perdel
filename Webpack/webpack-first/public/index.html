@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= htmlWebpackPlugin.options.config.title %></title>
+    <!-- <% if (htmlWebpackPlugin.options.config.consoleLog) { %>
+        <link rel="stylesheet" type="text/css" href="http://consoleLog.css">
+    <% } %> -->
+</head>
+<body>
+    <div><%= htmlWebpackPlugin.options.config.serverHost %></div>
+    <!-- <img src="/src/assets/image/image1.png" /> -->
+    <img src="<%= require('../src/assets/image/image1.png') %>" />
+
+    <!-- <% if (htmlWebpackPlugin.options.config.consoleLog) { %>
+        <script src="//storage.jd.com/rs1/btte/vconsole.min.js"></script>
+    <% } %> -->
+</body>
+</html>

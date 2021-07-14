@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const arr = [100, 4, 200, 1, 3, 2];
+        function getMaxLenSerial(arr) {
+            let sortArr,
+                twoDArr = [];
+            // 数组排序
+            function sort(arr) {
+                const len = arr.length;
+                for (let i = 0; i < len - 1; i++) {
+                    for (let j = 0; j < len - 1 - i; j++) {
+                        if (arr[j] > arr[j + 1]) {
+                            let temp = arr[j];
+                            arr[j] = arr[j + 1];
+                            arr[j + 1] = temp;
+                        }
+                    }
+                }
+                return arr;
+            }
+            sortArr = sort(arr);
+            function getSerialArr(arr, start) {
+                const len = arr.length,
+                    oneDArr = [];
+                for (let i = start; i < len; i++) {
+                    if (i === start) {
+                        oneDArr.push(arr[i - 1]);
+                    }
+                    if (arr[i] - arr[i - 1] === 1) {
+                        oneDArr.push(arr[i]);
+                    } else {
+                        twoDArr.push(oneDArr);
+                        return i + 1;
+                    }
+                }
+            }
+            let start = getSerialArr(sortArr, 1),
+                len = arr.length,
+                max = 0;
+            while (start < len) {
+                start = getSerialArr(sortArr, start)
+            }
+            twoDArr.map(item => {
+                if (item.length > max) {
+                    max = item.length;
+                }
+            })
+            return max;
+        }
+        console.log(getMaxLenSerial(arr))
+    </script>
+</body>
+</html>

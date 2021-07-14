@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数组排序-冒泡排序</title>
+</head>
+<body>
+    <script>
+        let arr = [3, 44, 38, 5, 47, 15, 36, 26, 27, 2, 46, 4, 19, 50, 48];
+        // let arr = [1, 2, 3, 4];
+        function bubbleSort (arr) {
+            let isSort = true;
+            for (let i = 0; i < arr.length - 1; i++) { // 控制轮数
+                for (let j = 0; j < arr.length - 1 - i; j++) { // 控制每轮的比较次数
+                    if (arr[j] > arr[j + 1]) {
+                        let temp = arr[j];
+                        arr[j] = arr[j + 1];
+                        arr[j + 1] = temp;
+                        isSort = false;
+                    }
+                }
+                // console.log(arr)
+                if (isSort) {
+                    return arr;
+                }
+            }
+            return arr;
+        }
+        let result = bubbleSort(arr);
+        console.log("bubbleSort result: ", result);
+    </script>
+</body>
+</html>

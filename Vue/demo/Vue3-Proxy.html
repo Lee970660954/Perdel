@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue3-Proxy</title>
+</head>
+<body>
+    <script>
+        let obj1 = {
+                a: "a1",
+                b: "b1"
+            },
+            obj2 = {
+                c: "c1",
+                d: "d1"
+            };
+        for (let key in obj1) {
+            let val = obj1[key];
+            Object.defineProperty(obj1, key, {
+                get() {
+                    console.log("Object.defineProperty get", val);
+                    return val;
+                },
+                set(value) {
+                    console.log("Object.defineProperty set", value);
+                    val = value;
+                }
+            })
+        }
+        obj1["e"] = "e1";
+        let result = new Proxy(obj2, {
+            get(key) { 
+                console.log("Proxy get", obj2[key]);
+                return obj2[key];
+            },
+            set(key, value) { 
+                console.log("Proxy set", value);
+                obj2[key] = value;
+            },
+        })
+        obj2["f"] = "f1";
+    </script>
+</body>
+</html>

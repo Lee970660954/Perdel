@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>深拷贝（其他数据类型）</title>
+</head>
+<body>
+    <script>
+        const map = new Map();
+        map.set('key', 'value');
+        map.set('ConardLi', 'code秘密花园');
+
+        const set = new Set();
+        set.add('ConardLi');
+        set.add('code秘密花园');
+
+        const targetObj = {
+            field1: 1,
+            field2: undefined,
+            field3: {
+                child: 'child'
+            },
+            field4: [2, 4, 8],
+            empty: null,
+            map,
+            set,
+            bool: new Boolean(true),
+            num: new Number(2),
+            str: new String(2),
+            symbol1: Object(Symbol(1)),
+            symbol2: Symbol(2),
+            date: new Date(),
+            reg: /\d+/,
+            error: new Error(),
+            func1: () => {
+                console.log('code秘密花园');
+            },
+            func2: function (a, b) {
+                return a + b;
+            }
+        };
+        targetObj.targetObj = targetObj;
+        
+        // 1.String字面量 Number字面量 Boolean字面量 null undefined String对象 Number对象 Boolean对象 Symbol
+        // 2.普通对象 Map Set 
+        // 3.正则 函数
+        // String字面量 Number字面量 Boolean字面量 null undefined
+        const canIterableType = [
+            "[object Object]",
+            "[object Array]",
+            "[object Map]",
+            "[object Set]"
+        ];
+        function getType (target) {
+            return Object.prototype.toString.call(target);
+        }
+
+        function isObject (target) {
+            return typeof target === "object" && target !== null;
+        }
+
+        function cloneRegExp (target) {
+            const reFlags = /\w*$/,
+                result = new target.constructor(target.source, reFlags.exec(target));
+            result.lastIndex = target.lastIndex;
+            return result;
+        }
+
+        function cloneFunction (target) {
+            const bodyReg = /(?<={)(.|\n)+(?=})/m;
+            const paramReg = /(?<=\().+(?=\)\s+{)/;
+            const funcString = target.toString();
+            if (target.prototype) {
+                const param = paramReg.exec(funcString);
+                const body = bodyReg.exec(funcString);
+                if (body) {
+                    if (param) {
+                        const paramArr = param[0].split(",");
+                        return new Function(...paramArr, body[0]);
+                    } else {
+                        return new Function(body[0]);
+                    }
+                } else {
+                    return null;
+                }
+            } else {
+                return eval(funcString);
+            }
+        }
+
+        function cloneOthers (target) {
+            const type = getType(target),
+                ctor = target.constructor;
+            switch (type) {
+                case "[object Boolean]":
+                case "[object String]":
+                case "[object Number]":
+                case "[object Date]":
+                case "[object Error]":
+                    return new ctor(target);
+                    break;
+                case "[object Symbol]":
+                    return Object(Symbol.prototype.valueOf.call(target));
+                    break;
+                case "[object RegExp]":
+                    return cloneRegExp(target);
+                    break;
+                case "[object Function]":
+                    return cloneFunction(target);
+                    break;
+            }
+        }
+        function clone (target, map = new Map()) {
+            if (!isObject(target)) {
+                return target;
+            }
+            if (map.get(target)) {
+                return target;
+            }
+            map.set(target, true);
+            const type = getType(target);
+            if (canIterableType.indexOf(type) === -1) {
+                return cloneOthers(target);
+            }
+            const ctor = target.constructor;
+            const cloneTarget = new ctor();
+            if (type === "[object Object]" || "[object Array]") {
+                for (let key in target) {
+                    cloneTarget[key] = clone(target[key], map);
+                }
+            }
+
+            if (type === "[object Map]") {
+                target.forEach((value, key) => {
+                    cloneTarget.set(key, clone(value, map));
+                });
+            }
+
+            if (type === "[object Set]") {
+                target.forEach((value, key) => {
+                    cloneTarget.add(clone(value, map));
+                });
+            }
+            return cloneTarget;
+        }
+
+
+
+
+
+
+
+
+        const result = clone(targetObj);
+        console.log("target", targetObj);
+        console.log("result", result);
+    </script>
+</body>
+</html>

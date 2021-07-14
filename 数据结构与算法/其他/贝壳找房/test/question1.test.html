@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>
+        给定一个字符串找出其中出现次数最多的字母或者数字,字母不区分大小写，并输出其字母和对应的次数。
+        如： 输入"drff3 df" 返回 "f3"
+        输入 "a 3 a bbb c d" 返回"b3"
+        输入：'welcome to BeiKe interview'
+    </p>
+    <script>
+        const str = "welcome to BeiKe interview";
+        function getMax (str) {
+            let map = {},
+                arr = str.split(""),
+                max = 0,
+                maxChar = "";
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i]) {
+                    let count = map[arr[i]] || 0;
+                    count++;
+                    map[arr[i]] = count;
+                }
+            }
+            for (let key in map) {
+                if (map[key] > max) {
+                    max = map[key];
+                    maxChar = key;
+                }
+            }
+            return `${maxChar}${max}`
+        }
+        console.log(getMax(str));
+    </script>
+</body>
+</html>

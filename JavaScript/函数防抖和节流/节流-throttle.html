@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>节流-throttle</title>
+</head>
+<body>
+    <div id="content" style="height:150px;line-height:150px;text-align:center; color: #fff;background-color:#ccc;font-size:80px;"></div>
+    <script>
+        let num = 1;
+        const content = document.getElementById('content');
+        function count() {
+            content.innerHTML = num++;
+        };
+        // 节流-定时器版
+        // function throttle(func, wait) {
+        //     let timer;
+        //     return function () {
+        //         const context = this,
+        //             args = [...arguments];
+        //         if (!timer) {
+        //             timer = setTimeout(() => {
+        //                 func.apply(context, args);
+        //                 timer = null;
+        //             }, wait);
+        //         }
+        //     }
+        // }
+        // 节流-时间戳版
+        // function throttle (func, wait) {
+        //     let prev = 0;
+        //     return function () {
+        //         const context = this,
+        //             args = [...arguments],
+        //             now = new Date().getTime();
+        //         if (now - prev > wait) {
+        //             func.apply(context, args);
+        //             prev = now;
+        //         }
+        //     }
+        // }
+        /**
+         * 节流
+         * func 回调函数
+         * wait 延迟执行毫秒数
+         * immediate 是否立即执行 true为立即执行，false为延迟执行
+        */
+        function throttle (func, wait, immediate) {
+            if (immediate) {
+                let prev = 0;
+                return function () {
+                    const context = this,
+                        args = [...arguments],
+                        now = new Date().getTime();
+                    if (now - prev > wait) {
+                        func.apply(context, args);
+                        prev = now;
+                    }
+                }
+            } else {
+                let timer;
+                return function () {
+                    const context = this,
+                        args = [...arguments];
+                    if (!timer) {
+                        timer = setTimeout(() => {
+                            func.apply(context, args);
+                            timer = null;
+                        }, wait);
+                    }
+                }
+            }
+        }
+        content.onmousemove = throttle(count, 500, false);
+    </script>
+    <p>
+        节流-throttle
+        连续触发事件，但是在n秒内只会执行一次函数。节流会稀释函数的执行频率。节流有两类：
+        （1）延迟执行
+        实现方式为定时器。
+        （2）立即执行
+        实现方式为时间戳。
+
+    </p>
+</body>
+</html>

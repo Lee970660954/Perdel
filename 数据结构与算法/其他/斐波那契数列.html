@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>斐波那契数列</title>
+</head>
+<body>
+    <p>
+        斐波那契：由0和1开始，之后的斐波那契数列每一项都等于前两项之和。
+        斐波那契数列示例：1、1、2、3、5、8、13、21、34。
+        给定斐波那契数列的索引，返回该索引下的值。
+        示例：
+        fibonacci(6) // 13
+
+        变形：返回指定长度的斐波那契数列
+        示例：
+        fibonacci(6) // [1、1、2、3、5、8]
+    </p>
+    <script>
+        // 递归方法
+        // function fibonacci(n) {
+        //     if (n === 0 || n === 1) {
+        //         return 1
+        //     }
+        //     return arguments.callee(n - 1) + arguments.callee(n - 2);
+        // }
+        // 非递归方法1
+        // function fibonacci(n) {
+        //     let n1 = 1,
+        //         n2 = 1,
+        //         f = 0;
+        //     if (n === 0 || n === 1) {
+        //         return 1;
+        //     }
+        //     for (let i = 2; i < n + 1; i++) {
+        //         f = n1 + n2;
+        //         n1 = n2;
+        //         n2 = f;
+        //     }
+        //     return f;
+        // }
+        // 非递归方法2
+        // function fibonacci(n) {
+        //     let n1 = 1,
+        //         n2 = 1;
+        //     if (n === 0 || n === 1) {
+        //         return 1;
+        //     }
+        //     for (let i = 2; i < n + 1; i++) {
+        //         [n1, n2] = [n2, n1 + n2];
+        //     }
+        //     return n2;
+        // }
+
+        // 变形
+        function fibonacci(n) {
+            let arr = [];
+            if (n === 0) {
+                return arr;
+            }
+            if (n === 1) {
+                arr = [1];
+                return arr;
+            } else if (n === 2) {
+                arr = [1, 1];
+                return arr;
+            }
+            arr = [1, 1];
+            let n1 = 1,
+                n2 = 1;
+            for (let i = 2; i < n; i++) {
+                arr.push(n1 + n2);
+                [n1, n2] = [n2, n1 + n2];
+            }
+            return arr;
+
+        }
+        console.log(fibonacci(8));
+    </script>
+    <p>
+        总结：
+        1.斐波那契数列的规律为
+        （1）第一项和第二项为1。
+        （2）从第三项开始每一项为前两项之和，即fcn = fc(n - 1) + fc(n - 2)。
+        2.递归思想：函数自己调用自己，关键点在于函数截止的返回条件。
+        3.注意数列的第一项，在数组中是第0项。
+    </p>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>program1</title>
+</head>
+<body>
+    <!-- 实现一个倒计时，运行后控制台立即输出10，此后每隔⼀秒打印出来9.8.7.6.5.4.3.2.1 -->
+    <script>
+        var count = 10;
+        function countDown (timer) {
+            setTimeout(() => {
+                console.log(count);
+                count--;
+                if (count > 0) {
+                    countDown(1000);
+                }
+            }, timer);
+        }
+        countDown(0);
+    </script>
+</body>
+</html>

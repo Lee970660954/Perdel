@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>async没有retun返回什么</title>
+</head>
+<body>
+    <p>
+        async没有retun返回什么?
+    </p>
+    <script>
+        async function test1 () {
+			return 1;
+		}
+		async function test2 () {
+			const test1Resp = await test1();
+			console.log("test1Resp", test1Resp);
+            return test1Resp;
+		}
+        (async function() {
+            const test2Resp = await test2();
+            console.log("test2Resp", test2Resp);
+        })()
+    </script>
+    <p>
+        总结：
+        1.async函数的返回值是一个Promise对象。
+        （1）在有return时，使用Promise将结果包裹并返回；
+        （2）在没有return时，使用Promise将undefined包裹并返回；
+        2.await表达式
+        await后面一般跟Promise对象，async函数执行遇到await后，等待后面的Promise对象的状态从pending变为fulfilled后，将resolve的参数返回并接着往下执行，直到下一个await或结束。
+    </p>
+</body>
+</html>

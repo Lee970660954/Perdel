@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>整数反转</title>
+</head>
+<body>
+    <script>
+        let x = -1230;
+        // var reverse = function(x) {
+        //     let str = x.toString(),
+        //         arr,
+        //         has = false;
+        //     if (str.indexOf("-") !== -1) {
+        //         arr = str.substring(1).split("");
+        //         has = true;
+        //     } else {
+        //         arr = str.split("");
+        //     }
+        //     if (arr[arr.length - 1] == 0) {
+        //         arr.splice(arr.length - 1, 1)
+        //     }
+        //     str = has ? -arr.reverse().join("") : arr.reverse().join("");
+        //     if (Number(str) > Math.pow(2,31) - 1 || Number(str) < -Math.pow(2,31)) {
+        //         return 0
+        //     }
+        //     return str;
+        // };
+        var reverse = function(x) {
+            let res = 0;
+            for (let origin = x; origin != 0; origin = parseInt(origin/10)) {
+                console.log(origin)
+                res = res * 10 + origin % 10;
+            }
+            if (res > Math.pow(2, 31) - 1 || res < -Math.pow(2, 31)) {
+                return 0;
+            }
+            return res;
+        }
+        console.log(reverse(x));
+    </script>
+</body>
+</html>

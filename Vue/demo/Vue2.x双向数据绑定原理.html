@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue2.x双向数据绑定原理</title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="text1">
+        {{text1}}<br/>
+        <input type="text" v-model="text2">
+        {{text2}}<br/>
+    </div>
+
+    <script>
+        // 为html中所有引用vue实例data中属性的dom（除了以v-model方式引用的）添加订阅者，当属性值发生变化时，发布者发布通知，对应属性的主题对象收到通知，然后发布给每一订阅者进行更新。。。
+        function Watcher (vm, node, key) {
+            Dep.target = this;
+            this.vm = vm;
+            this.node = node;
+            this.key = key;
+            this.update();
+            Dep.target = null;
+        }
+        Watcher.prototype = {
+            // constructor: Watcher,
+            update: function () {
+                this.get();
+                this.node.nodeValue = this.value;
+                this.node.value = this.value;
+            },
+            get: function () {
+                this.value = this.vm[this.key];
+            }
+        }
+        // Dep 为vue实例上的每个数据属性创建一个主题，用于。。。
+        function Dep () {
+            this.subs = [];
+        }
+        Dep.prototype = {
+            // constructor: Dep,
+            addSub: function (sub) {
+                this.subs.push(sub);
+            },
+            notify: function () {
+                this.subs.forEach(function(sub) {
+                    sub.update();
+                });
+            }
+        }
+        // 利用Object.defineProperty对vue实例data中的属性进行处理。。。
+        function defineReactive (obj, key, value) {
+            const dep = new Dep();
+            Object.defineProperty(obj, key, {
+                get: function () {
+                    if (Dep.target) {
+                        dep.addSub(Dep.target);
+                    }
+                    return value;
+                },
+                set: function (newValue) {
+                    if (newValue === value) {
+                        return;
+                    };
+                    value = newValue;
+                    dep.notify();
+                }
+            });
+        }
+        // 将vue实例data中的属性进行处理。。。
+        function observe (vm, data) {
+            let keys = Object.keys(data);
+            for (let key of keys) {
+                defineReactive(vm, key, data[key]);
+            }
+        }
+        // 对dom节点进行编译
+        function compile (node, vm) {
+            let reg = /\{\{(.*)\}\}/;
+            // 元素节点
+            if (node.nodeType == 1) {
+                let attrs = node.attributes,
+                    key;
+                for (let i = 0; i < attrs.length; i++) {
+                    if (attrs[i].nodeName == "v-model") {
+                        key = attrs[i].nodeValue;
+                        node.addEventListener("input", e => {
+                            vm[key] = e.target.value;
+                        }, false);
+                        // node.value = vm[key];
+                        new Watcher(vm, node, key);
+                        node.removeAttribute("v-model");
+                    }
+                }
+            }
+
+            // 文本节点
+            if (node.nodeType == 3) {
+                if (reg.test(node.nodeValue)) {
+                    let key = RegExp.$1.trim();
+                    new Watcher(vm, node, key);
+                }
+            }
+        }
+        // 利用documentFragment将html中引用vue实例中data属性的dom，替换为对应的属性值，并且创建订阅者和为v-model添加事件监听，最终返回documentFragment包裹着处理好的dom
+        function nodeToFragment (app, vm) {
+            const fragment = document.createDocumentFragment();
+            let child;
+            while (child = app.firstChild) {
+                compile(child, vm);
+                fragment.appendChild(child);
+            }
+            return fragment;
+        }
+        // Vue构造函数
+        function Vue (options) {
+            let app = document.getElementById(options.el),
+                dom;
+            this.el = options.el;
+            this.data = options.data;
+            observe(this, this.data);
+            dom = nodeToFragment(app, this);
+            app.appendChild(dom);
+        }
+        const vue = new Vue({
+            el: "app",
+            data: {
+                text1: "1",
+                text2: "2"
+            }
+        })
+        setTimeout(() => {
+            vue.text1 = "11";
+        }, 2000);
+    </script>
+</body>
+</html>

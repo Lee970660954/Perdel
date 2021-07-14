@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>question1</title>
+</head>
+<body>
+    <p>
+        实现 hasProperty(o,'x.y.z') 方法，可以判断 o.x.y.z 路径是否存在对应属性。
+        示例：
+        const o = {x:{y:{z:0}}}
+        hasProperty(o,'x.y.z') // true
+        hasProperty(o,'x.w') // false
+    </p>
+    <script>
+        const o = {x:{y:{z:0}}}
+        function hasProperty (obj, path) {
+            let curObj = obj,
+                pathArr = path.split(".");
+            for (let i = 0; i < pathArr.length; i++) {
+                let result = propInObj(curObj, pathArr[i]);
+                if (result) {
+                    curObj = curObj[pathArr[i]];
+                } else {
+                    return false;
+                }
+            }
+            return true;
+        }
+        // obj.prop obj[prop]
+        // function propInObj (obj, prop) {
+        //     if (obj[prop] !== undefined) {
+        //         return true;
+        //     } else {
+        //         return false;
+        //     }
+        // }
+        // in
+        function propInObj (obj, prop) {
+            if (prop in obj) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        // hasOwnProperty
+        // function propInObj (obj, prop) {
+        //     if (obj.hasOwnProperty(prop)) {
+        //         return true;
+        //     } else {
+        //         return false;
+        //     }
+        // }
+
+        console.log(hasProperty(o, "x.y.z"));
+        console.log(hasProperty(o, "x.w"));
+    </script>
+    <p>
+        总结：
+        1.JS中判断对象上是否存在某属性的方式：
+        （1）obj.prop !== undefined 或 obj[prop] !== undefined：缺点是当属性存在但属性值为undefined时返回false，另外该方式无法判断属性是对象的自身属性还是原型链上的属性。
+        （2）prop in obj：若属性存在于对象自身或原型链上则返回true，否则返回false。 缺点是无法判断属性是对象的自身属性还是原型链上的属性。
+        （3）obj.hasOwnProperty(prop)：若属性存在于对象自身则返回true，否则返回false。
+        2.JS中String的split方法：用于把一个字符串按照指定字符分割成字符串数组。
+    </p>
+</body>
+</html>

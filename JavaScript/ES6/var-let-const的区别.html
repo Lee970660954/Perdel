@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>var-let-const的区别</title>
+</head>
+<body>
+    <p>
+        JS中var、let和const的区别。
+    </p>
+    <script>
+        // 1.var声明的变量会挂载在window上，而let和const不会。
+        // var a = "a";
+        // console.log(a, window.a);// a a
+        // let b = "b";
+        // console.log(b, window.b);// b undefined
+        // const c = "c";
+        // console.log(c, window.c);// c undefined
+
+        // 2.var声明的变量存在变量提升，let和const不存在变量提升。
+        // console.log(a);// undefined a已声明还没赋值，默认得到undefined值
+        // console.log(b);// 报错 Cannot access 'b' before initialization，找不到变量b
+        // console.log(c);// 报错 Cannot access 'c' before initialization，找不到变量c
+        // var a = "a";
+        // let b = "b";
+        // const c = "c";
+
+        // 3.var声明的变量不存在块级作用域，let和const存在块级作用域。
+        // if (1) {
+        //     var a = "a";
+        //     let b = "b";
+        //     const c = "c";
+        // }
+        // console.log(a);// a
+        // console.log(b);// 报错 Uncaught ReferenceError: b is not defined，找不到变量b
+        // console.log(c);// 报错 Uncaught ReferenceError: c is not defined，找不到变量c
+
+        // 4.同一作用域下，var可以声明同名变量，但是let和const不能声明同名变量。
+        // var a = "a";
+        // var a = "aa";
+        // console.log(a);// aa
+        // let b = "b";
+        // let b = "bb";
+        // console.log(b);// Uncaught SyntaxError: Identifier 'b' has already been declared
+        // const c = "c";
+        // const c = "cc";
+        // console.log(c);// Uncaught SyntaxError: Identifier 'c' has already been declared
+
+        // 5.暂存死区，在同一作用域下，使用let或const声明的变量，只会在当前作用域寻找该变量。
+        // var a = "a";
+        // if (1) {
+        //     a = "aa";
+        //     console.log(a);
+        //     let a = "aaa";
+        //     // const a = "aaa";
+        // }
+
+        // 6.const声明的变量不可更改，但是当值类型为引用数据类型时，可以改变其属性。
+        // const a = "a";
+        // a = "aa";
+        // console.log(a);// Uncaught TypeError: Assignment to constant variable.
+        // const a = {
+        //     test: "a"
+        // }
+        // a.test = "aa";
+        // console.log(a);// {test: "aa"}
+    </script>
+</body>
+</html>

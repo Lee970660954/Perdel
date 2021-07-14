@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS中的new操作符原生实现</title>
+</head>
+<body>
+    <p>
+        JS中的new操作符做了什么？原生实现？
+    </p>
+    <script>
+        function newOperator (ctor) {
+            if (typeof ctor !== "function") {
+                throw "function newOperator' s first param must be function type!"
+            }
+            const newObj = Object.create(ctor.prototype);
+            const args = [...arguments].slice(1);
+            const ctorResult = ctor.apply(newObj, args);
+            const isObject = function (opt) {
+                return typeof opt === "object" && opt !== null;
+            }
+            const isFunction = function (opt) {
+                return typeof opt === "function";
+            }
+            if (isObject(ctorResult) || isFunction(ctorResult)) {
+                return ctorResult;
+            }
+            return newObj;
+        }
+        const Student = function (name, age) {
+            this.name = name;
+            this.age = age;
+        }
+        Student.prototype.getName = function () {
+            console.log(this.name);
+        }
+        const s1 = newOperator(Student, "lyj", "25");
+        const s2 = newOperator(Student, "wjq", "25");
+        console.log(s1, Student.prototype.isPrototypeOf(s1));
+        console.log(s2, Student.prototype.isPrototypeOf(s2));
+        s1.getName();
+        s2.getName();
+    </script>
+    <p>
+        总结：
+        1.JS中的new操作符具体做了什么？
+        （1）创建一个对象newObj。
+        （2）将newObj的原型对象的指针设置为构造函数的原型对象，即Object.create(newObj, ctor.prototype)，并且通过new创建的所有对象都是如此。
+        （3）构造函数执行时的this指针指向newObj。
+        （4）判断构造函数执行后的返回值，如果没有返回则将newObj返回，如果有返回且返回值为引用数据类型，则返回该返回值，否则依旧返回newObj。
+    </p>
+</body>
+</html>

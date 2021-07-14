@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>question1</title>
+</head>
+<body>
+    <p>
+        实现 hasProperty(o,'x.y.z') 方法，可以判断 o.x.y.z 路径是否存在对应属性。
+        示例：
+        const o = {x:{y:{z:0}}}
+        hasProperty(o,'x.y.z') // true
+        hasProperty(o,'x.w') // false
+    </p>
+    <script>
+        const o = {x:{y:{z:0}}}
+        function hasProperty (obj, path) {
+            let pathArr = path.split("."),
+                o = obj;
+            for (let i = 0; i < pathArr.length; i++) {
+                if (!poly(o, pathArr[i])) {
+                    return false;
+                }
+                o = o[pathArr[i]];
+            }
+            return true;
+        }
+        // function poly (o, p) {
+        //     return p in o;
+        // }
+        // function poly (o, p) {
+        //     return o.hasOwnProperty(p);
+        // }
+        function poly (o, p) {
+            if (o[p] !== undefined) {
+                return true;
+            } else {
+                return false;
+            }
+            
+        }
+        console.log(hasProperty(o, "x.y.z"));
+        console.log(hasProperty(o, "x.w"));
+    </script>
+</body>
+</html>

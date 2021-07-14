@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>深拷贝基础版</title>
+</head>
+<body>
+    <script>
+        const targetObj = {
+            field1: undefined,
+            field2: null,
+            field3: true,
+            field4: 2,
+            field5: "3",
+            field6: {
+                child: 'child'
+            },
+            field7: [2, 4, 8]
+        };
+        targetObj.field8 = targetObj;
+        function isObject (target) {
+            return Object.prototype.toString.call(target) === "[object Object]";
+        }
+        function isArray (target) {
+            return Object.prototype.toString.call(target) === "[object Array]";
+        }
+        function cloneFunc (target, map = new Map()) {
+            if (!isObject(target) && !isArray(target)) {
+                return target;
+            }
+            let cloneTarget = new target.constructor();
+            if (map.get(target)) {
+                return map.get(target);
+            }
+            map.set(target, cloneTarget);
+            if (isObject(target)) {
+                for (let key in target) {
+                    cloneTarget[key] = cloneFunc(target[key], map);
+                }
+            }
+            if (isArray(target)) {
+                target.map((item, index) => {
+                    cloneTarget[index] = cloneFunc(item, map);
+                })
+            }
+            return cloneTarget;
+        }
+        const copyObj = cloneFunc(targetObj);
+        targetObj.field1 = "field1";
+        targetObj.field6 = "field6";
+        console.log("copyObj", copyObj);
+        console.log("targetObj", targetObj);
+    </script>
+</body>
+</html>

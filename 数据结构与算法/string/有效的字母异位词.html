@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>有效的字母异位词</title>
+</head>
+<body>
+    <script>
+        let s = "anagram",
+            t = "nagaram";
+        // var isAnagram = function(s, t) {
+        //     if (s.length !== t.length) {
+        //         return false;
+        //     }
+        //     let countSMap = {},
+        //         countTMap = {};
+        //     for (let i = 0; i < s.length; i++) {
+        //         if (countSMap[s[i]]) {
+        //             countSMap[s[i]] = countSMap[s[i]] + 1;
+        //         } else {
+        //             countSMap[s[i]] = 1;
+        //         }
+        //         if (countTMap[t[i]]) {
+        //             countTMap[t[i]] = countTMap[t[i]] + 1;
+        //         } else {
+        //             countTMap[t[i]] = 1;
+        //         }
+        //     }
+        //     for (let key in countSMap) {
+        //         if (countSMap[key] !== countTMap[key]) {
+        //             return false;
+        //         }
+        //     }
+        //     return true;
+        // };
+        var isAnagram = function(s, t) {
+            if (s.length !== t.length) {
+                return false;
+            }
+            let sArr = s.split("").sort(),
+                tArr = t.split("").sort(),
+                sStr = sArr.join("");
+                tStr = tArr.join("");
+            if (sStr == tStr) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        console.log(isAnagram(s, t));
+    </script>
+</body>
+</html>

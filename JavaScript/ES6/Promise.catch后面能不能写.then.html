@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise.catch后面能不能写.then</title>
+</head>
+<body>
+    <p>
+        Promise.catch后面能不能写.then?
+    </p>
+    <script>
+        const p1 = new Promise((resolve, reject) => {
+            console.log("p1 0");
+            resolve("p1 0");
+        })
+        .then(res => {
+            console.log("p1 1");
+            return 1;
+        })
+        .then(res => {
+            console.log("p1 2");
+            // return 2;
+            throw new Error("error1");
+        })
+        .then(res => {
+            console.log("p1 3");
+            return 3;
+        })
+        .catch(err => {
+            console.log("p1 4");
+            // return 4;
+            throw new Error("error2");
+        })
+        .then(res => {
+            console.log("p1 5");
+            return 5;
+        })
+    </script>
+    <p>
+        总结：
+        1.Promise.catch后面能写.then
+        (1)Promise的catch方法会捕获到前面抛出的错误，并将Promise状态变为rejected，在catch中也可以通过返回非错误值将Promise状态变为fulfilled，所以catch方法后面可以写then方法继续处理逻辑。
+    </p>
+</body>
+</html>

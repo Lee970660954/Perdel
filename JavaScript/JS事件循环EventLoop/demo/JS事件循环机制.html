@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue-nextTick</title>
+</head>
+<body>
+    <div class="outer">
+        <div class="inner">inner</div>
+    </div>
+    <script>
+        var outer = document.querySelector('.outer')
+        var inner = document.querySelector('.inner')
+
+        function onClick() {
+            console.log('click')
+
+            setTimeout(function() {
+                console.log('timeout')
+            }, 0)
+
+            Promise.resolve().then(function() {
+                console.log('promise')
+            })
+        }
+
+        inner.addEventListener('click', onClick)
+        outer.addEventListener('click', onClick)
+
+        inner.click()
+
+    </script>
+
+    <!-- <script> 
+        console.log('global')
+
+        for (var i = 1;i <= 5;i ++) {
+            setTimeout(function() {
+                console.log(i)
+            },i*1000)
+            console.log(i)
+        }
+
+        new Promise(function (resolve) {
+            console.log('promise1')
+            resolve()
+        })
+        .then(function () {
+            console.log('then1')
+        })
+
+        setTimeout(function () {
+            console.log('timeout2')
+            new Promise(function (resolve) {
+                console.log('timeout2_promise')
+                resolve()
+            })
+            .then(function () {
+                console.log('timeout2_then')
+            })
+        }, 1000)
+    </script> -->
+
+    <!-- <script>
+        console.log('a');
+
+        setTimeout(function() {
+            console.log('b');
+            process.nextTick(function() {
+                console.log('c');
+            })
+            new Promise(function(resolve) {
+                console.log('d');
+                resolve();
+            }).then(function() {
+                console.log('e')
+            })
+        })
+        process.nextTick(function() {
+            console.log('f');
+        })
+        new Promise(function(resolve) {
+            console.log('g');
+            resolve();
+        }).then(function() {
+            console.log('h')
+        })
+
+        setTimeout(function() {
+            console.log('i');
+            process.nextTick(function() {
+                console.log('j');
+            })
+            new Promise(function(resolve) {
+                console.log('k');
+                resolve();
+            }).then(function() {
+                console.log('l')
+            })
+        })
+    </script> -->
+
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS实现ES6字符串模版函数</title>
+</head>
+<body>
+    <p>
+        JS编码实现模版引擎变量替换。
+        示例：
+        const data = {
+            year: "2021",
+            month: "06",
+            day: "23",
+        },
+        str = "${year}-${month}-${day}";
+        compile(str);
+        输出：2021-06-23
+    </p>
+    <script>
+        const data = {
+                year: "2021",
+                month: "06",
+                day: "23",
+            },
+            str = "${year}-${month}-${day}";
+        function compile (str) {
+            const reg = /\$\{(\w+)\}/;
+            if (reg.test(str)) {
+                const key = reg.exec(str)[1],
+                    keyStr = reg.exec(str)[0];
+                str = str.replace(keyStr, data[key]);
+                return compile(str);
+            }
+            return str;
+        }
+        console.log(compile(str));
+    </script>
+    <p>
+        总结：
+        1.正则表达式
+        （1）特殊字符使用“\”进行转译。
+        （2）“\w“表示查找单词字符。
+        （3）n+表示匹配任何包含至少一个n的字符串。
+        （4）RegExp对象的test方法，检索字符串中指定的值，存在返回true，否则返回false。
+        （5）RegExp对象的exec方法，检索字符串中指定的值，返回找到的值，并确定其位置。
+        2.JS中String的replace方法
+        将字符串中第一个参数所在位置的值替换为第二个参数的值。
+        3.递归思想
+    </p>
+</body>
+</html>

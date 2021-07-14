@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数组-有效的数独</title>
+</head>
+<body>
+    <script>
+        // let board = [["5","3",".",".","7",".",".",".","."]
+        // ,["6",".",".","1","9","5",".",".","."]
+        // ,[".","9","8",".",".",".",".","6","."]
+        // ,["8",".",".",".","6",".",".",".","3"]
+        // ,["4",".",".","8",".","3",".",".","1"]
+        // ,["7",".",".",".","2",".",".",".","6"]
+        // ,[".","6",".",".",".",".","2","8","."]
+        // ,[".",".",".","4","1","9",".",".","5"]
+        // ,[".",".",".",".","8",".",".","7","9"]];
+        let board = [["8","3",".",".","7",".",".",".","."]
+        ,["6",".",".","1","9","5",".",".","."]
+        ,[".","9","8",".",".",".",".","6","."]
+        ,["8",".",".",".","6",".",".",".","3"]
+        ,["4",".",".","8",".","3",".",".","1"]
+        ,["7",".",".",".","2",".",".",".","6"]
+        ,[".","6",".",".",".",".","2","8","."]
+        ,[".",".",".","4","1","9",".",".","5"]
+        ,[".",".",".",".","8",".",".","7","9"]]
+        var isValidSudoku = function(board) {
+            for (let i = 0; i < 9; i++) {
+                let rowArr = [],
+                    rowArrSet,
+                    colArr = [],
+                    colArrSet;
+                for (let j = 0; j < 9; j++) {
+                    if (board[i][j] !== ".") {
+                        rowArr.push(board[i][j])
+                    }
+                    if (board[j][i] !== ".") {
+                        colArr.push(board[j][i]);
+                    }
+                }
+                // 判断行是否有效
+                rowArrSet = new Set(rowArr);
+                if (rowArr.length !== rowArrSet.size) {
+                    return false;
+                }
+                // 判断列是否有效
+                colArrSet = new Set(colArr);
+                if (colArr.length !== colArrSet.size) {
+                    return false;
+                }
+            }
+
+            // 判断九宫格是否有效
+            for (let row = 0; row < 9; row += 3) {
+                for (let col = 0; col < 9; col += 3) {
+                    let squareArr = [],
+                        squareArrSet;
+                    for (let a = row; a < row + 3; a++ ) {
+                        for (let b = col; b < col + 3; b++ ) {
+                            if (board[a][b] !== ".") {
+                                squareArr.push(board[a][b]);
+                            }
+                        }
+                    }
+                    squareArrSet = new Set(squareArr);
+                    if (squareArr.length !== squareArrSet.size) {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        };
+        console.log(isValidSudoku(board));
+    </script>
+</body>
+</html>

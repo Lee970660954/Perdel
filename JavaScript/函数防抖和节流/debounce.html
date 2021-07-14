@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>debounce</title>
+</head>
+<body>
+    <p>
+        const demo = debounce((a)=>{
+            console.log('a:',a);
+        },3000)
+
+        demo('zhangsan');
+        demo('zhangsan');
+        demo('zhangsan');
+    </p>
+    <script>
+        function debounce (fn, wait, immediate = false) {
+            let timer;
+            if (immediate) {
+                return function () {
+                    let a = [...arguments][0];
+                    if (!timer) {
+                        fn(a);
+                    }
+                    timer = setTimeout(() => {
+                        timer = null;
+                    }, wait);
+                }
+            } else {
+                return function () {
+                    let a = [...arguments][0];
+                    if (timer) {
+                        clearTimeout(timer)
+                    }
+                    timer = setTimeout(() => {
+                        fn(a);
+                    }, wait);
+                }
+            }
+        }
+        const demo = debounce((a)=>{
+            console.log('a:',a);
+        }, 1000)
+
+        demo('zhangsan');
+        demo('zhangsan');
+        demo('zhangsan');
+    </script>
+</body>
+</html>

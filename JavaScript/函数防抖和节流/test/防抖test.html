@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>防抖test</title>
+</head>
+<body>
+    <script>
+        // function debounce (fn, wait) {
+        //     let timer;
+        //     return function () {
+        //         if (timer) {
+        //             clearTimeout(timer);
+        //         }
+        //         timer = setTimeout(() => {
+        //             fn();
+        //         }, wait);
+        //     }
+        // }
+        // function debounce (fn, wait) {
+        //     let timer;
+        //     return function () {
+        //         if (!timer) {
+        //             fn();
+        //         }
+        //         timer = setTimeout(() => {
+        //             clearTimeout(timer);
+        //         }, wait);
+        //     }
+        // }
+
+        // function testFn1 () {
+        //     console.log("debounce testFn1");
+        // }
+        // let test1 = debounce(testFn1, 1000);
+        // test1();
+        // test1();
+        // test1();
+
+        // function debounce (fn, wait, immediate = false) {
+        //     let timer;
+        //     return function () {
+        //         if (immediate) {
+        //             if (!timer) {
+        //                 fn();
+        //             }
+        //             timer = setTimeout(() => {
+        //                 clearTimeout(timer);
+        //             }, wait);
+        //         } else {
+        //             if (timer) {
+        //                 clearTimeout(timer);
+        //             }
+        //             timer = setTimeout(() => {
+        //                 fn();
+        //             }, wait);
+        //         }
+        //     }
+        // }
+        // function testFn2 () {
+        //     console.log("debounce testFn2");
+        // }
+        // let test2 = debounce(testFn2, 1000, true);
+        // test2();
+        // test2();
+        // test2();
+    </script>
+</body>
+</html>

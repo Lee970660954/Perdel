@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>验证回文串</title>
+</head>
+<body>
+    <script>
+        let s = "A man, a plan, a canal: Panama";
+        var isPalindrome = function(s) {
+            let str = "",
+                reg = /[A-Za-z0-9]/i;
+            for (let i = 0; i < s.length; i++) {
+                if (reg.test(s[i])) {
+                    str += s[i];
+                }
+            }
+            str = str.toLocaleLowerCase();
+            for (let i = 0; i < str.length; i++) {
+                if (str[i] !== str[str.length - i - 1]) {
+                    return false;
+                }
+            }
+            return true;
+        };
+        console.log(isPalindrome(s));
+    </script>
+</body>
+</html>

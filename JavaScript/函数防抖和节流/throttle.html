@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>throttle</title>
+</head>
+<body>
+    <p>
+        const demo = throttle((a)=>{
+            console.log('a:',a);
+        },3000)
+
+        setTimeout(() => {
+            demo('zhangsan');
+        }, 500);
+        setTimeout(() => {
+            demo('zhangsan');
+        }, 1000);
+        setTimeout(() => {
+            demo('zhangsan');
+        }, 1500);
+        setTimeout(() => {
+            demo('zhangsan');
+        }, 2000);
+        setTimeout(() => {
+            demo('zhangsan');
+        }, 2500);
+    </p>
+    <script>
+        function throttle (fn, wait, immediate = false) {
+            if (immediate) {
+                let last = 0;
+                return function () {
+                    let a = [...arguments][0],
+                        now = new Date().getTime();
+                    if (now - last > wait) {
+                        fn(a);
+                        last = now;
+                    }
+                }
+            } else {
+                let timer;
+                return function () {
+                    let a = [...arguments][0];
+                    if (!timer) {
+                        timer = setTimeout(() => {
+                            fn(a);
+                            timer = null;
+                        }, wait);
+                    }
+                }
+            }
+        }
+        const demo = throttle((a)=>{
+            console.log('a:',a);
+        }, 1000, true);
+        demo('zhangsan');
+        setTimeout(() => {
+            demo('zhangsan');
+        }, 1000);
+        setTimeout(() => {
+            demo('zhangsan');
+        }, 1500);
+        setTimeout(() => {
+            demo('zhangsan');
+        }, 2000);
+        setTimeout(() => {
+            demo('zhangsan');
+        }, 2500);
+    </script>
+</body>
+</html>

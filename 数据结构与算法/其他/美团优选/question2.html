@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>question2</title>
+</head>
+<body>
+    <p>
+        给定数组，输出出现次数最多的字母前数字之和。
+        示例：
+        ['1a','2b','13c','5a']的结果为6
+    </p>
+    <script>
+        const arr = ['1a','2b','13c','5a'];
+        // function getMax (arr) {
+        //     let map = new Map();
+        //     for (let i = 0; i < arr.length; i++) {
+        //         // let char = arr[i].substring(arr[i].length - 1),
+        //         //     num = arr[i].substring(0, arr[i].length - 1),
+        //         let char = arr[i][arr[i].length - 1],
+        //             num = arr[i].split(arr[i][arr[i].length - 1])[0],
+        //             valueArr = [],
+        //             mapItem = map.get(char);
+        //             console.log(char, num);
+        //         if (mapItem) {
+        //             valueArr = [...mapItem, num];
+        //         } else {
+        //             valueArr = [num];
+        //         }
+        //         map.set(char, valueArr);
+        //     }
+        //     let values = [...map.values()],
+        //         maxArr = [],
+        //         max = 0;
+        //     for (let j = 0; j < values.length; j++) {
+        //         if (values[j].length > maxArr.length) {
+        //             maxArr = values[j];
+        //             max = values[j].reduce((sum, item) => {
+        //                 return Number(sum) + Number(item);
+        //             }, 0)
+        //         }
+        //     }
+        //     return max;
+        // }
+        function getMax (arr) {
+            let map = {};
+            for (let i = 0; i < arr.length; i++) {
+                let char = arr[i].substring(arr[i].length - 1),
+                    num = arr[i].substring(0, arr[i].length - 1);
+                    count = map[char] || [];
+                map[char] = [...count, num];
+            }
+            let max = 0,
+                maxArr = [];
+            for (let key in map) {
+                if (map[key].length > maxArr.length) {
+                    maxArr = map[key];
+                }
+            }
+            max = maxArr.reduce((sum, item) => {
+                return Number(sum) + Number(item);
+            }, 0)
+            return max;
+        }
+        console.log(getMax(arr));
+    </script>
+    <p>
+        总结：
+        1.创建map，遍历数组，用substring或split方法将数组项拆分成字母和数字两部分，并以字母为key，数字数组为value存储到map中；
+        2.利用map.values()方法和扩展运算符将map值转化为数组形式；
+        3.遍历上一步生成的数组，并找到数组项中长度最长的一项并返回该项值数组的加和。
+    </p>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS实现ES6字符串模版函数</title>
+</head>
+<body>
+    <p>
+        JS编码实现模版引擎变量替换。
+        示例：
+        const data = {
+            year: "2021",
+            month: "06",
+            day: "23",
+        },
+        str = "${year}-${month}-${day}";
+        compile(str);
+        输出：2021-06-23
+    </p>
+    <script>
+        const data = {
+                year: "2021",
+                month: "06",
+                day: "23",
+            },
+            str = "${year}-${month}-${day}";
+        function compile (str) {
+            let reg = /\$\{(\w+)\}/;
+            if (reg.test(str)) {
+                let key = reg.exec(str)[0],
+                    value = reg.exec(str)[1];
+                str = str.replace(key, data[value]);
+                return compile(str);
+            }
+            return str;
+        }
+        console.log(compile(str));
+    </script>
+</body>
+</html>

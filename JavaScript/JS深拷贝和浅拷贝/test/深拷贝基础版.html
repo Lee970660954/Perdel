@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>深拷贝基础版</title>
+</head>
+<body>
+    <script>
+        const targetObj = {
+            field1: undefined,
+            field2: null,
+            field3: true,
+            field4: 2,
+            field5: "3",
+            field6: {
+                child: 'child'
+            },
+            field7: [2, 4, 8]
+        };
+        targetObj.field8 = targetObj;
+        function isObject (target) {
+            return typeof target === "object" && target !== null;
+        }
+        function cloneFunc (target, map = new Map()) {
+            if (!isObject(target)) {
+                return target;
+            }
+            if (map.get(target)) {
+                return target;
+            }
+            map.set(target, true);
+            
+            const ctor = target.constructor;
+            let cloneTarget = new ctor();
+            if (isObject) {
+                for (let key in target) {
+                    cloneTarget[key] = cloneFunc(target[key], map);
+                }
+            }
+            return cloneTarget;
+        }
+        const copyObj = cloneFunc(targetObj);
+        targetObj.field1 = "field1";
+        targetObj.field6 = "field6";
+        console.log("copyObj", copyObj);
+        console.log("targetObj", targetObj);
+    </script>
+</body>
+</html>

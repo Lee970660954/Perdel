@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>原生JS实现Promise和链式调用then方法</title>
+</head>
+<body>
+    <script>
+        // 定义_Promise的三种状态
+        const PENDING = "pending",// 等待
+            FULFILLED = "fulfilled",// 成功
+            REJECTED = "rejected";// 失败
+        
+        class _Promise {
+            constructor (func) {
+                this.status = PENDING;
+                this.data = null;
+                this.error = null;
+                this.fulfilledCallback = [];
+                this.rejectedCallback = [];
+                func(this.resolve.bind(this), this.reject.bind(this));
+            }
+        }
+
+        _Promise.prototype.resolve = function (data) {
+            if (this.status === PENDING) {
+                setTimeout(() => {
+                    this.data = data;
+                    this.status = FULFILLED;
+                    this.fulfilledCallback.length && this.fulfilledCallback.map(item => {
+                        item(this.data);
+                    });
+                });
+            }
+        }
+
+        _Promise.prototype.reject = function (error) {
+            if (this.status === PENDING) {
+                setTimeout(() => {
+                    this.error = error;
+                    this.status = REJECTED;
+                    this.rejectedCallback.length && this.rejectedCallback.map(item => {
+                        item(this.error)
+                    });
+                });
+            }
+        }
+
+        _Promise.prototype.then = function (fulfilledCallback, rejectedCallback) {
+            if (this.status === PENDING) {
+                return new _Promise((resolve, reject) => {
+                    this.fulfilledCallback.push(data => {
+                        try {
+                            let res = fulfilledCallback(data);
+                            resolve(res);
+                        } catch (e) {
+                            reject(e);
+                        }
+                    })
+                    this.rejectedCallback.push(error => {
+                        try {
+                            let res = rejectedCallback(error);
+                            resolve(res);
+                        } catch (e) {
+                            reject(e);
+                        }
+                    })
+                })
+            }
+        }
+
+        const _promise = new _Promise((resolve, reject) => {
+            // resolve("data1");
+            reject("error1")
+        })
+
+        _promise
+        .then(data => {
+            console.log("then1", data);
+            return new _Promise((resolve, reject) => {
+                resolve("data11");
+            })
+            // return "data2";
+        }).
+        then(data => {
+            console.log("then2", data);
+            return "data3";
+        })
+        // .then(data => {
+        //     console.log("then3", data);
+        // })
+    </script>
+</body>
+</html>

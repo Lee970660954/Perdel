@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>
+        实现一个类，可以on, emit, off, once, 注册、调用、取消、注册仅能使用一次的事件
+    </p>
+    <script>
+        class EventBus {
+            constructor () {
+                // 事件注册Map
+                this.events = this.events || new Map();
+                // once事件注册Map
+                this.onceEvents = this.onceEvents || new Map();
+            }
+        }
+        EventBus.prototype.on = function (type, fn) {
+            if (!this.events.get(type)) {
+                this.events.set(type, [fn]);
+            } else {
+                const curEvents = this.events.get(type);
+                curEvents.push(fn);
+                this.events.set(type, curEvents);
+            }
+        }
+        EventBus.prototype.emit = function (type) {
+            if (this.events.get(type)) {
+                const curEvents = this.events.get(type);
+                const args = [...arguments].slice(1);
+                curEvents.forEach(item => {
+                    item.apply(this, args)
+                });
+            }
+            if (this.onceEvents.get(type)) {
+                const curEvents = this.onceEvents.get(type);
+                const args = [...arguments].slice(1);
+                curEvents.forEach(item => {
+                    item.apply(this, args)
+                });
+                this.onceEvents.delete(type);
+            }
+        }
+        EventBus.prototype.off = function (type) {
+            if (this.events.get(type)) {
+                this.events.delete(type);
+            }
+            if (this.onceEvents.get(type)) {
+                this.onceEvents.delete(type);
+            }
+        }
+        EventBus.prototype.once = function (type, fn) {
+            if (!this.onceEvents.get(type)) {
+                this.onceEvents.set(type, [fn]);
+            } else {
+                const curEvents = this.onceEvents.get(type);
+                curEvents.push(fn);
+                this.onceEvents.set(type, curEvents);
+            }
+        }
+
+
+
+        const eBus = new EventBus();
+        eBus.on("test", function () {
+            const args = arguments;
+            console.log("args1", [...args]);
+        })
+        eBus.on("test", function () {
+            const args = arguments;
+            console.log("args2", [...args]);
+        })
+        eBus.once("testa", function () {
+            const args = arguments;
+            console.log("argsa", [...args]);
+        })
+        // eBus.once("testa", function () {
+        //     const args = arguments;
+        //     console.log("argsa", [...args]);
+        // })
+        eBus.emit("test", 1, 2);
+        eBus.off("test");
+        eBus.emit("test", 3, 4);
+        eBus.emit("testa", 5, 6);
+        eBus.emit("testa", 5, 6);
+    </script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>防抖-debounce</title>
+</head>
+<body>
+    <div id="content" style="height:150px;line-height:150px;text-align:center; color: #fff;background-color:#ccc;font-size:80px;"></div>
+    <script>
+        let num = 1;
+        const content = document.getElementById('content');
+        function count() {
+            content.innerHTML = num++;
+        };
+        // 防抖-结束触发版本
+        // function debounce (func, wait) {
+        //     let timer;
+        //     return function () {
+        //         const context = this,
+        //             args = [...arguments];
+        //         if (timer) {
+        //             clearTimeout(timer);
+        //         }
+        //         timer = setTimeout(() => {
+        //             func.apply(context, args)
+        //         }, wait)
+        //     }
+        // }
+        // 防抖-开始触发版本
+        // function debounce (func, wait) {
+        //     let timer;
+        //     return function () {
+        //         const context = this,
+        //             args = [...arguments];
+        //         if (timer) {
+        //             clearTimeout(timer);
+        //         }
+        //         const immediately = !timer;
+        //         timer = setTimeout(() => {
+        //             timer = null;
+        //         }, wait)
+        //         if (immediately) {
+        //             func.apply(context, args);
+        //         }
+        //     }
+        // }
+        /**
+         * 防抖
+         * func 回调函数
+         * wait 延迟执行毫秒数
+         * immediate 是否立即执行 true为立即执行， false为非立即执行
+        */
+        function debounce (func = () => {}, wait = 500, immediate = false) {
+            let timer;
+            return function () {
+                const context = this,
+                    args = [...arguments];
+                if (immediate) {
+                    const canNow = !timer;
+                    if (timer) {
+                        clearTimeout(timer);
+                    }
+                    timer = setTimeout(() => {
+                        timer = null;
+                    }, wait);
+                    if (canNow) {
+                        func.apply(context, args);
+                    }
+                } else {
+                    if (timer) {
+                        clearTimeout(timer);
+                    }
+                    timer = setTimeout(() => {
+                        func.apply(context, args);
+                    }, wait);
+                }
+            }
+        }
+
+        content.onmousemove = debounce(count, 500, false);
+    </script>
+    <p>
+        防抖-debounce
+        在指定时间内，多次触发事件，后面触发的事件回调函数会覆盖前面触发的事件回调函数，最终只会执行一次。防抖有两类：
+        （1）延迟执行
+        setTimeout中是func的调用。
+        （2）立即执行
+        setTimeout中是清空timer，并且在后面进行判断如果timer为null，则执行回调函数。
+    </p>
+</body>
+</html>

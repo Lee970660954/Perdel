@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数组去重</title>
+</head>
+<body>
+    <script>
+        let nums = [0, 0, 1, 1, 1, 2, 2, 3, 3, 4];
+        // function arrayDup (nums) {
+        //     let l = 0,
+        //         r = 1;
+        //     for (let i = 0; i < nums.length - 1; i++) {
+        //         if (nums[l] !== nums[r]) {
+        //             l++;
+        //             nums[l] = nums[r];
+        //         }
+        //         r++;
+        //     }
+        //     return nums.splice(0, l + 1);
+        // }
+
+        // function arrayDup (nums) {
+        //     let arr = [];
+        //     nums.forEach(value => {
+        //         if (arr.indexOf(value) === -1) {
+        //             arr.push(value);
+        //         }
+        //     });
+        //     return arr;
+        // }
+
+        function arrayDup (nums) {
+            let set = new Set(nums);
+            return [...set];
+        }
+        console.log(arrayDup(nums));
+    </script>
+</body>
+</html>

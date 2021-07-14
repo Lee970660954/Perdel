@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>document.ready和window.onload的区别</title>
+    <script src="https://lib.sinaapp.com/js/jquery/1.7.2/jquery.js?6" defer onload='console.log("1", document.getElementsByTagName("p")[0])'></script>
+    <script src="https://lib.sinaapp.com/js/jquery/1.7.2/jquery.js?1"></script>
+    <script src="https://lib.sinaapp.com/js/jquery/1.7.2/jquery.js?2"></script>
+    <script src="https://lib.sinaapp.com/js/jquery/1.7.2/jquery.js?3"></script>
+    <script src="https://lib.sinaapp.com/js/jquery/1.7.2/jquery.js?4"></script>
+    <script src="https://lib.sinaapp.com/js/jquery/1.7.2/jquery.js?5"></script>
+</head>
+<body>
+    <p>
+        document.ready和window.onload的区别
+    </p>
+    <img src="https://m.360buyimg.com/jrqb/jfs/t1/179876/9/11573/3433994/60d93d7cE17fc0ad1/bc64b16aebf597a8.png?1" alt="">
+    <script>
+        document.ready = function (callback) {
+            document.addEventListener("DOMContentLoaded", function () {
+                document.removeEventListener("DOMContentLoaded", arguments.callee, false);
+            }, false)
+            callback && callback();
+            console.log("document.onready");
+        }
+        window.onload = function () {
+            console.log("window.onload");
+        }
+        document.ready(() => {
+            console.log(1)
+        });
+        console.log("2", document.getElementsByTagName("p")[0])
+    </script>
+    <!-- <img src="https://m.360buyimg.com/jrqb/jfs/t1/179876/9/11573/3433994/60d93d7cE17fc0ad1/bc64b16aebf597a8.png?2" alt=""> -->
+    <p>
+        总结：
+        1.document.ready表示文档结构已经加载完成（不包含图片等非文本媒体文件），DOM结构绘制完毕就会执行，并且绑定多个事件回调函数不会互相覆盖，而是都会执行。
+        2.window.onload表示页面包含图片等资源都加载完成，必须等到网页中所有内容全部加载完毕才会执行，并且绑定多个事件回调函数后面的会覆盖前面的。
+    </p>
+</body>
+</html>

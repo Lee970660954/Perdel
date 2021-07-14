@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let result = [];
+        let a = [1,3,4,3,[4,5,2,[3,4,5]]];
+        function getMax (arr) {
+                let curArr = getNormalArr(arr);
+                console.log(curArr);
+        }
+        
+        function getNormalArr (arr) {
+            result = arr.map(item => {
+                if (Object.prototype.toString.call(item) === "[object Array]") {
+                    return getNormalArr(item);
+                } else {
+                    result.push(item);
+                }
+            });
+            return result;
+        }
+        getMax(a)
+    </script>
+</body>
+</html>

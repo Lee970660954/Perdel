@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>旋转图像</title>
+</head>
+<body>
+    <script>
+        let matrix = [[1,2,3],[4,5,6],[7,8,9]]
+        // var rotate = function(matrix) {
+        //     let arr = [];
+        //     for (let i = 0; i < matrix.length; i++) {
+        //         let subArr = [];
+        //         for (let j = 0; j < matrix.length; j++) {
+        //             subArr.push(matrix[i][j])
+        //         }
+        //         arr.push(subArr);
+        //     }
+        //     for (let i = 0; i < arr.length; i++) {
+        //         for (let j = 0; j < arr.length; j++) {
+        //             matrix[j][arr.length - i - 1] = arr[i][j];
+        //         }
+        //     }
+        //     return matrix;
+        // };
+        let rotate = function(matrix) {
+            for (let i = 0; i < matrix.length; i++) {
+                for (let j = i; j < matrix.length; j++) {
+                    let temp = matrix[i][j];
+                    matrix[i][j] = matrix[j][i];
+                    matrix[j][i] = temp;
+                }
+            }
+            matrix.map(item => {
+                return item.reverse();
+            })
+            return matrix;
+        };
+        console.log(rotate(matrix));
+    </script>
+</body>
+</html>

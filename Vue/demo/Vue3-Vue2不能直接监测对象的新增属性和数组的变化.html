@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue3-Vue2不能直接监测对象的新增属性和数组的变化</title>
+</head>
+<body>
+    <div id="app">{{obj.a}}<span v-if="obj.b">{{obj.b}}</span><span v-if="obj.d">{{obj.d}}</span></div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: "#app",
+            data () {
+                return {
+                    obj: {
+                        a: "a1",
+                        c: "c1"
+                    }
+                }
+            },
+            updated () {
+                console.log("updated", this.obj.a, this.obj.b);
+            }
+        });
+        vm.obj.b = "b1";
+    </script>
+</body>
+</html>

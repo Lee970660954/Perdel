@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS中的new操作符原生实现</title>
+</head>
+<body>
+    <script>
+        function newOperator (ctor) {
+            if (typeof ctor !== "function") {
+                throw "newOperator' s first param must be a function!"
+            }
+            const prototype = ctor.prototype;
+            const newObj = Object.create(prototype);
+            const args = [...arguments].slice(1);
+            const ctorRes = ctor.apply(newObj, args);
+            function isObject (target) {
+                return typeof target === "object" && target !== null;
+            }
+            function isFunction (target) {
+                return typeof target === "function";
+            }
+            if (isObject(ctorRes) || isFunction(ctorRes)) {
+                return ctorRes;
+            }
+            return newObj;
+        }
+        let ctor = function (name, age) {
+            this.name = name;
+            this.age = age;
+        }
+        ctor.prototype.getName = function () {
+            console.log(this.name);
+            return this.name;
+        }
+        let newObj1 = newOperator(ctor, "lyj", "25");
+        let newObj2 = newOperator(ctor, "wjq", "25");
+        newObj1.getName();
+        newObj2.getName();
+        function isProtoTypeOf (instance, origin) {
+            return origin.isPrototypeOf(instance);
+        }
+        console.log(isProtoTypeOf(newObj2, ctor.prototype))
+    </script>
+</body>
+</html>
