@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>找出数组的所有子集</title>
+</head>
+<body>
+    <p>求数组所有子集[1,2,3] --> []、[1]、[2]、[1,2]、[3]、[1,2,3]、[1,3]、[2,3]</p>
+    <script>
+        const nums = [1, 2, 3];
+        function subsets (nums) {
+            let res = [],
+                len = nums.length;
+            for (let i = 0; i < (1 << len); i++) {
+                let arr = [];
+                for (let j = 0; j < len; j++) {
+                    if (i & (1 << j)) {
+                        arr.push(nums[j]);
+                    }
+                }
+                res.push(arr);
+            }
+            return res;
+        }
+        console.log(subsets(nums))
+    </script>
+    <p>
+        思路：
+        1.双层for循环的第一层目的是控制子集数目。1 << len
+        2.双层for循环的第二层目的是控制每个子集的内容。i & (1 << j)
+    </p>
+</body>
+</html>

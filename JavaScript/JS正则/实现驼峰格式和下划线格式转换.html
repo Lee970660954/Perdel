@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实现驼峰格式和下划线格式转换</title>
+</head>
+<body>
+    <script>
+        let eg1 = "myNameIsLiYongJian";
+        let eg2 = "my_name_is_li_yong_jian";
+        function change1 (str) {
+            let reg = /[A-Z]+/;
+            let cur;
+            let curLow;
+            if (reg.test(str)) {
+                cur = reg.exec(str)[0];
+                curLow = cur.toLowerCase();
+                str = str.replace(cur, `_${curLow}`);
+                return change1(str);
+            }
+            return str;
+            // console.log(cur, curLow, str)
+        }
+        // const res1 = change1(eg1);
+        // console.log("res1", res1);
+        
+        function change2 (str) {
+            let reg = /(\_[a-z])/;
+            let cur;
+            let curHigh;
+            if (reg.test(str)) {
+                cur = reg.exec(str)[0];
+                curHigh = cur[1].toUpperCase();
+                str = str.replace(cur, curHigh);
+                return change2(str);
+            }
+            return str;
+        }
+        const res2 = change2(eg2);
+        console.log("res2", res2);
+    </script>
+</body>
+</html>

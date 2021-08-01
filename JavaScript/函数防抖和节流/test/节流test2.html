@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>节流test2</title>
+</head>
+<body>
+    <script>
+        function testFn () {
+            console.log("testFn");
+        }
+        function throttle (fn, wait, immediate = false) {
+            if (immediate) {
+                let last = 0;
+                return function () {
+                    let now = new Date().getTime();
+                    if (now - last > wait) {
+                        fn();
+                        last = now;
+                    }
+                }
+            } else {
+                let timer;
+                return function () {
+                    if (!timer) {
+                        timer = setTimeout(() => {
+                            fn();
+                            timer = null
+                        }, wait);
+                    }
+                }
+            }
+        }
+        // let test = testFn;
+        // test();
+        // test();
+        // test();
+        let test = throttle(testFn, 1000, false);
+        test();
+        setTimeout(() => {
+            test();
+        }, 500);
+        setTimeout(() => {
+            test();
+        }, 2000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>实现方法getAllNames获取所有的name值, 返回数组</p>
+    <script>
+        const data = [{
+                name: '11',
+                children: [{
+                    name: '12',
+                    children: [{
+                        name: '13'
+                    }]
+                }]
+            },
+            {
+                name: '21',
+                children: [{
+                    name: '22',
+                    children: [{
+                        name: '13'
+                    }]
+                }]
+            }    
+        ]
+        const result = [];
+        function getType (target) {
+            return Object.prototype.toString.call(target);
+        }
+        function getAllNames (target) {
+            let type = getType(target);
+            if (type === "[object Object]") {
+                for (let key in target) {
+                    if (key === "name") {
+                        result.push(target[key]);
+                    }
+                    getAllNames(target[key]);
+                }
+            }
+            if (type === "[object Array]") {
+                for (let i = 0; i < target.length; i++) {
+                    getAllNames(target[i]);
+                }
+            }
+
+        }
+        getAllNames(data);
+        console.log(result);
+    </script>
+    <p>
+        思路：
+        1.利用对象深拷贝的思路，遍历对象的每个key，如果key为"name"则将改字段的值存入result数组即可。
+    </p>
+</body>
+</html>

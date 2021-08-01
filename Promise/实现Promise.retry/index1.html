@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+    <script>
+        times = 4
+        // 传入一个promise生成器
+        Promise.retry = async (promiseFunc, maxTimes = 3) => {
+            let result;
+            while (maxTimes > 0) {
+                --maxTimes;
+                --times;
+                console.log("maxTimes", maxTimes);
+                // 新建一个promise接管目标promise的resolve以及reject
+                await new Promise((res, rej) => {
+                    promiseFunc()
+                    .then((result1) => {
+                        // 成功即可终端循环
+                        maxTimes = 0;
+                        result = result1;
+                        res();
+                    })
+                    .catch((e) => {
+                        // 失败检测是否还有重试次数
+                        if (maxTimes === 0) {
+                            rej(e);
+                        } else {
+                            res();
+                        }
+                    });
+                });
+            }
+            return result;
+        };
+        let test1 = function () {
+            return new Promise((resolve, reject) => {
+                if (times === 2) {
+                    resolve(`执行成功${times}`);
+                } else {
+                    reject(`执行失败${times}`);
+                }
+            });
+        }
+        let result = Promise.retry(test1, 4);
+        console.log("result", result);
+    </script>
+</body>
+</html>

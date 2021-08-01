@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>防抖test2</title>
+</head>
+<body>
+    <script>
+        function testFn () {
+            console.log("testFn");
+        }
+        function debounce (fn, wait, immediate = false) {
+            let timer;
+            return function () {
+                if (immediate) {
+                    if (!timer) {
+                        fn();
+                    }
+                    timer = setTimeout(() => {
+                        clearTimeout(timer)
+                    }, wait);
+                } else {
+                    if (timer) {
+                        clearTimeout(timer);
+                    }
+                    timer = setTimeout(() => {
+                        fn();
+                    }, wait);
+                }
+            }
+        }
+        // let test = testFn;
+        // test();
+        // test();
+        // test();
+        let test = debounce(testFn, 1000, true);
+        test();
+        test();
+        test();
+    </script>
+</body>
+</html>

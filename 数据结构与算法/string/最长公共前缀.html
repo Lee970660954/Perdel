@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>最长公共前缀</title>
+</head>
+<body>
+    <script>
+        // let strs = ["flower","flow","flight"];
+        let strs = ["dog","racecar","car"];
+        var longestCommonPrefix = function(strs) {
+            let result = "",
+                minI,
+                minL;
+            for (let i = 0; i < strs.length; i++) {
+                if (!minL || strs[i].length < minL) {
+                    minL = strs[i].length;
+                    minI = i;
+                }
+            }
+            for (let i = 0; i < minL; i++) {
+                result = result + strs[minI][i]
+                let reg = new RegExp("^" + result);
+                for (let j = 0; j < strs.length; j++) {
+                    if (!strs[j].match(reg)) {
+                        return result.slice(0, result.length - 1);
+                    }
+                }
+            }
+            return result;
+        };
+        const result = longestCommonPrefix(strs);
+        console.log("result", result);
+    </script>
+</body>
+</html>

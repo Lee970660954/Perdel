@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实现数组的reduce方法</title>
+</head>
+<body>
+    <script>
+        const nums = [1, 2, 3, 4];
+        Array.prototype.reduce = function (callbackFn, initValue) {
+            if (typeof callbackFn !== "function") {
+                throw new TypeError("callbackFn is not a function!");
+            }
+            if (this === null || this === undefined) {
+                throw new TypeError("Cannot read property 'reduce' of null or undefined");
+            }
+            let o = this,
+                len = o.length,
+                res,
+                startIndex = 0;
+            if (len === 0) {
+                return [];
+            }
+            if (!initValue) {
+                res = o[0];
+                startIndex = 1;
+            } else {
+                res = initValue;
+            }
+            for (let i = startIndex; i < len; i++) {
+                res = callbackFn.call(undefined, res, o[i], i, nums);
+            }
+            return res;
+        }
+        const result = nums.reduce((res, item, index, arr) => {
+            return res + item;
+        });
+        console.log("result", result);
+    </script>
+</body>
+</html>

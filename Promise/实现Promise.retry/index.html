@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实现Promise.retry</title>
+</head>
+<body>
+    <p>实现Promise.retry，成功后resolve结果，失败后重试，尝试超过一定次数才真正的reject，例如失败后需要重试3次</p>
+    <script>
+        let testTimes = 4;
+        Promise.retry = async (promiseFn, maxTimes = 3) => {
+            let result;
+            while (maxTimes > 0) {
+                maxTimes--;
+                testTimes--;
+                console.log("maxTimes", maxTimes);
+                await new Promise((resolve, reject) => {
+                    promiseFn()
+                    .then(res => {
+                        maxTimes = 0;
+                        result = res;
+                        resolve();
+                    })
+                    .catch(err => {
+                        if (maxTimes === 0) {
+                            reject(err);
+                        } else {
+                            resolve();
+                        }
+                    })
+                })
+            }
+            return result;
+        }
+        let promiseFn = function () {
+            return new Promise((resolve, reject) => {
+                if (testTimes === 2) {
+                    resolve(`执行成功${testTimes}`);
+                } else {
+                    reject(`执行失败${testTimes}`);
+                }
+            })
+        }
+        let result = Promise.retry(promiseFn, 4);
+        console.log("result", result);
+    </script>
+    <p>
+        思路：
+        1.Promise.retry设计为async函数，入参为两个，一个是promiseFn函数，返回一个Promise，另一个是失败尝试的次数上限maxTimes。
+        2.以maxTimes是否大于0为条件，实现循环尝试。循环体内await并创建一个新的Promise来负责promiseFn结果的返回。
+        3.关键逻辑，如果promiseFn执行后的状态为Fulfilled，通过其then方法将结果返回；否则执行后的状态为Rejected，通过其catch方法将结果返回，如果maxTimes等于0，则直接reject结果，否则resolve。
+    </p>
+</body>
+</html>

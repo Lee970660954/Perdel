@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+    <p>
+        实现一个方法 deepKey(obj, fn) 转换obj的key为大写。
+        例如：
+        const obj = {
+            'name': 111,
+            'children': [{
+                'name': 1111
+            }],
+            'eat': ['apple']
+        }
+        deepKey(obj, key => key.toLocaleUpperCase())
+        转化后为
+        {
+            'NANME': 111,
+            'CHILDREN': [{
+            'NAME': 1111
+            }],
+            'EAT': ['apple']
+        }
+
+    </p>
+    <script>
+        const obj = {
+            'name': 111,
+            'children': [{
+                'name': 1111
+            }],
+            'eat': ['apple']
+        }
+        function getType (target) {
+            return Object.prototype.toString.call(target);
+        }
+        function deepKey (target, fn) {
+            let type = getType(target),
+                ctor,
+                cloneTarget;
+            if (type !== "[object Object]" && type !== "[object Array]") {
+                return target;
+            }
+            ctor = target.constructor;
+            cloneTarget = new ctor();
+            if (type === "[object Object]") {
+                for (let key in target) {
+                    let newKey = fn(key);
+                    cloneTarget[newKey] = deepKey(target[key], fn);
+                }
+            }
+            if (type === "[object Array]") {
+                for (let key = 0; key < target.length; key++) {
+                    cloneTarget[key] = deepKey(target[key], fn);
+                }
+            }
+            return cloneTarget;
+        }
+        const fn = key => key.toLocaleUpperCase();
+        const res = deepKey(obj, fn);
+        console.log(res);
+    </script>
+    <p>
+        思路：
+        1.利用对象深拷贝来完成对象的遍历，在遍历时同步改变克隆对象的key值即可。
+    </p>
+</body>
+</html>

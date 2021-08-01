@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实现strStr()</title>
+</head>
+<body>
+    <script>
+        let haystack = "aaaaa",
+            needle = "bba";
+        // function strStr (haystack, needle) {
+        //     let lArr = haystack.split(""),
+        //         rArr = needle.split(""),
+        //         lLen = lArr.length,
+        //         rLen = rArr.length,
+        //         l = 0,
+        //         r = 0,
+        //         common = "",
+        //         result = 0;
+        //     if (rLen === 0) {
+        //         result = 0;
+        //         return result;
+        //     } else if (lLen === 0 || lLen < rLen ) {
+        //         result = -1;
+        //         return result;
+        //     }
+        //     for (let i = 0; i < lLen; i++) {
+        //         if (lArr[l] === rArr[r]) {
+        //             if (common === "") {
+        //                 result = i;
+        //             }
+        //             common = common + lArr[l];
+        //             l++;
+        //             r++;
+        //         } else if (lArr[l] !== rLen[r]) {
+        //             if (common.length >= rLen) {
+        //                 return result;
+        //             } else {
+        //                 common = "";
+        //                 r = 0;
+        //                 l++;
+        //                 if (lLen - l < rLen) {
+        //                     result = -1;
+        //                     return result;
+        //                 }
+        //             }
+        //         }
+        //     }
+        //     return result;
+        // }
+        // function strStr (haystack, needle) {
+        //     for (let i = 0; i < haystack.length; i++) {
+        //         if (haystack[i] === needle[0] && haystack.slice(i, i + needle.length) === needle) {
+        //             return i;
+        //         }
+        //     }
+        //     return needle === "" ? 0 : -1;
+        // }
+        function strStr (haystack, needle) {
+            let reg = new RegExp(needle);
+            let result = haystack.match(reg);
+            return result && result[0] ? result["index"] : (needle === "" ? 0 : -1);
+        }
+        const result = strStr(haystack, needle);
+        console.log("result", result);
+    </script>
+</body>
+</html>

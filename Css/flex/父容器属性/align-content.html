@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>align-content</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .parent {
+            width: 100%;
+            height: 300px;
+            background: #f5f5f5;
+            display: flex;
+            flex-wrap: wrap;
+            /* align-content: flex-start; */
+            /* align-content: flex-end; */
+            /* align-content: center; */
+            /* align-content: space-between; */
+            /* align-content: space-around; */
+            /* align-content: stretch; */
+        }
+        .child {
+            width: 200px;
+            height: 100px;
+            background: green;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="parent">
+        <div class="child">child1</div>
+        <div class="child">child2</div>
+        <div class="child">child3</div>
+        <div class="child">child4</div>
+        <div class="child">child5</div>
+        <div class="child">child6</div>
+        <div class="child">child7</div>
+        <div class="child">child8</div>
+    </div>
+    <p>
+        总结：
+        align-content属性定义了多根轴线的对齐方式，如果flex容器只有一根轴线，该属性不起作用，有以下值：
+        1.flex-start：与交叉轴的起点对齐。
+        2.flex-end：与交叉轴的终点对齐。
+        3.center：与交叉轴的中点对齐。
+        4.space-between：与交叉轴两端对齐，轴线之间的间隔平均分布。
+        5.space-around：每个轴线两侧的间隔都相等，所以，轴线之间的间隔比轴线与边框的间隔大一倍。
+        6.stretch：轴线占满整个交叉轴，默认值。
+    </p>
+</body>
+</html>
