@@ -1,0 +1,25 @@
+/* 
+    1.首先在父容器元素中通过设置padding-left和padding-right为左右子元素预留出空间。
+    2.子元素布局为中左右，为所有子元素设置float: left;向左浮动，并且通过设置position: relative;设置相对定位，设置中间子元素宽度为100%，完成了中间子元素的宽度自适应目标。
+    3.为左子元素设置margin-left: -100%; 使其与中间子元素在一行，然后为其设置left: -200px; 填充父容器元素左边预留出的区域。
+    4.为右子元素设置margin-left：-300px; 使其与中间子元素在一行，然后为其设置left: 300px; 填充父容器元素右边预留出的区域。
+*/
+.container {
+    padding-left: 200px;
+    padding-right: 300px;
+}
+.container div {
+    float: left;
+    position: relative;
+}
+.div2 {
+    width: 100%;
+}
+.div1 {
+    margin-left: -100%;
+    left: -200px;
+}
+.div3 {
+    margin-left: -300px;
+    left: 300px;
+}

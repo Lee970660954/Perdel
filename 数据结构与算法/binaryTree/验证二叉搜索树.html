@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>验证二叉搜索树</title>
+</head>
+<body>
+    <script>
+        // 解法一
+        // function supIsValidBST (root, min, max) {
+        //     if (!root) {
+        //         return true;
+        //     }
+        //     if (root.val <= min || root.val >= max) {
+        //         return false;
+        //     }
+        //     return supIsValidBST(root.left, min, root.val) && supIsValidBST(root.right, root.val, max);
+        // }
+        // function isValidBST (root) {
+        //     return supIsValidBST(root, -Infinity, Infinity);
+        // }
+        
+        // 解法二
+        function middleOrder (root, arr = []) {
+            if (root) {
+                middleOrder(root.left, arr);
+                arr.push(root.val);
+                middleOrder(root.right, arr);
+            }
+            return arr;
+        }
+        function isValidBST (root) {
+            let arr = middleOrder(root);
+            for (let i = 0; i < arr.length - 1; i++) {
+                if (arr[i + 1] <= arr[i]) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>

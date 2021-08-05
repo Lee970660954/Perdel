@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工厂模式</title>
+</head>
+<body>
+    <p>
+        工厂模式解决了创建多个相似对象的问题，但是存在无法识别对象类型的问题。
+    </p>
+    <script>
+        function createPerson (name, age, job) {
+            var o = new Object();
+            o.name = name;
+            o.age = age;
+            o.job = job;
+            o.sayName = function () {
+                alert(this.name);
+            }
+            return o;
+        }
+        var person1 = createPerson("Nicholas", 29, "Software Engineer");
+        var person2 = createPerson("Greg", 27, "Doctor");
+        console.log(person1, typeof person1);
+        console.log(person2, typeof person2);
+    </script>
+</body>
+</html>

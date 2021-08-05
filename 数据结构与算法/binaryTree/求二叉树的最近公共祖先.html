@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>求二叉树的最近公共祖先</title>
+</head>
+<body>
+    <script>
+        let root = {
+            val: 1,
+            left: {
+                val: 2
+            },
+            right: {
+                val: 3,
+                left: {
+                    val: 4,
+                    left: {
+                        val: 6
+                    }
+                },
+                right: {
+                    val: 5
+                }
+            }
+        }
+        function getParent (root, node1, node2) {
+            if (!root) {
+                return null;
+            }
+            if (root.val === node1 || root.val === node2) {
+                return root;
+            }
+            let left = getParent(root.left, node1, node2);
+            let right = getParent(root.right, node1, node2);
+            if (left === null) {
+                return right;
+            }
+            if (right === null) {
+                return left;
+            }
+            return root;
+        }
+        const res1 = getParent(root, 2, 6);
+        console.log("res1", res1.val);
+        const res2 = getParent(root, 5, 6);
+        console.log("res2", res2.val);
+        const res3 = getParent(root, 3, 4);
+        console.log("res3", res3.val);
+    </script>
+    <p>
+        思路：
+        1.函数入参为根节点、指定节点1的val，指定节点2的val。
+        2.最近公共祖先：对于有根树T的两个节点node1，node2，最近公共祖先表示为节点x，满足x是node1和node2的祖先且x的深度尽可能大，除此之外，一个节点也可能是它自己的祖先。
+        3.
+        （1）函数内部判断当前根节点是否为空，若为空则返回null。
+        （2）如果当前根节点的值与node1或者node2相等，则返回当前根节点。
+        （3）如果不满足（1）和（2）的条件，则递归遍历当前根节点的左子节点和右子节点。
+        （4）如果递归遍历左子节点结果返回空，则返回递归遍历右子节点的结果；如果递归遍历右子节点结果返回空，则返回递归遍历左子节点的结果。
+        （5）否则返回根节点。
+
+    </p>
+</body>
+</html>

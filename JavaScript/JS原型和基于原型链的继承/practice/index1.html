@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>练习题1</title>
+</head>
+<body>
+    <script>
+        function a () {
+            this.name = 3;
+        }
+        var c = new a();
+        // a.prototype.b = 9;
+        a.prototype = {
+            b: 9,
+            e: 10
+        };
+        var d = new a();
+        console.log(c.constructor);
+        console.log(d.constructor);
+    </script>
+</body>
+</html>

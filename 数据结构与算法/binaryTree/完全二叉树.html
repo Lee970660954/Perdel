@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>完全二叉树</title>
+</head>
+<body>
+    <p>
+        实现一个完全二叉树，完成二叉树的插入、遍历和深度功能。
+        1.第n层的节点数最多2的n次方个节点。
+        2.n层二叉树最多有2的n + 1次方 - 1个节点。
+        3.第一个非叶子节点length/2。
+        4.一个节点的孩子节点：2n、2n + 1。
+    </p>
+    <script>
+        class Node {
+            constructor (data, left, right) {
+                this.data = data;
+                this.left = left;
+                this.right = right;
+            }
+            show () {
+                console.log(this.data);
+            }
+        }
+        class Tree {
+            constructor () {
+                this.root = null;
+            }
+            insert (data) {
+                let node = new Node(data, null, null);
+                if (!this.root) {
+                    this.root = node;
+                    return;
+                }
+                let current = this.root,
+                    parent = null;
+                while (current) {
+                    parent = current;
+                    if (data < parent.data) {
+                        current = parent.left;
+                        if (!current) {
+                            parent.left = node;
+                            return;
+                        }
+                    } else {
+                        current = parent.right;
+                        if (!current) {
+                            parent.right = node;
+                            return;
+                        }
+                    }
+                }
+            }
+            preOrder (root) {
+                if (root) {
+                    root.show();
+                    this.preOrder(root.left);
+                    this.preOrder(root.right);
+                }
+            }
+            middleOrder (root) {
+                if (root) {
+                    this.middleOrder(root.left);
+                    root.show();
+                    this.middleOrder(root.right);
+                }
+            }
+            lastOrder (root) {
+                if (root) {
+                    this.lastOrder(root.left);
+                    this.lastOrder(root.right);
+                    root.show();
+                }
+            }
+            getMin () {
+                let current = this.root;
+                while (current) {
+                    if (!current.left) {
+                        return current;
+                    }
+                    current = current.left;
+                }
+            }
+            getMax () {
+                let current = this.root;
+                while (current) {
+                    if (!current.right) {
+                        return current;
+                    }
+                    current = current.right;
+                }
+            }
+            getDepth (root) {
+                return !root ? 0 : Math.max(this.getDepth(root.left), this.getDepth(root.right)) + 1;
+            }
+            getNode (data, node) {
+                if (node) {
+                    if (data === node.data) {
+                        return node;
+                    } else if (data < node.data) {
+                        return this.getNode(data, node.left);
+                    } else if (data > node.data) {
+                        return this.getNode(data, node.right);
+                    }
+                } else {
+                    return null;
+                }
+            }
+        }
+
+
+        let nodeArr = [3, 8, 1, 2, 5, 7, 6, 0];
+        let tree1 = new Tree();
+        nodeArr.forEach(item => {
+            tree1.insert(item);
+        })
+        console.log(tree1);
+        let tree1Root = tree1.root;
+        console.log("getDepth", tree1.getDepth(tree1Root));
+        console.log("getMin", tree1.getMin());
+        console.log("getMax", tree1.getMax());
+        // tree1.preOrder(tree1Root);
+        // tree1.middleOrder(tree1Root);
+        // tree1.lastOrder(tree1Root);
+        console.log("getNode", tree1.getNode(5, tree1Root));
+        // function middleOrder (root, arr = []) {
+        //     if (root) {
+        //         middleOrder(root.left, arr);
+        //         arr.push(root.data);
+        //         middleOrder(root.right, arr);
+        //     }
+        //     return arr;
+        // }
+        console.log("middleOrder", middleOrder(tree1Root))
+    </script>
+</body>
+</html>

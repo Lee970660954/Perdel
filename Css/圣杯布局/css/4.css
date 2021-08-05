@@ -1,0 +1,21 @@
+/* 
+    1.设置父容器元素position: relative; 为相对定位。使得后面子元素的定位以其作为参照。
+    2.子元素布局为左中右，并且子元素全部设置为绝对定位，其中左子元素left: 0; ，中间子元素left: 200px;，right: 300px;，右子元素right: 0;。
+*/
+
+.container {
+    position: relative;
+}
+.container div{
+    position: absolute;
+}
+.div1 {
+    left: 0;
+}
+.div2 {
+    left: 200px;
+    right: 300px;
+}
+.div3 {
+    right: 0;
+}
