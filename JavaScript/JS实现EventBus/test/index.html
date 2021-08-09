@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS实现EventBus</title>
+</head>
+<body>
+    <p>
+        实现一个类，可以on, emit, off, once, 注册、调用、取消、注册仅能使用一次的事件。
+    </p>
+    <script>
+        class EventBus {
+            constructor () {
+                this.events = new Map();
+                this.onceEvents = new Map();
+            }
+            on (eType, eCallbackFn) {
+                let cur = this.events.get(eType) ? [...this.events.get(eType), eCallbackFn] : [eCallbackFn];
+                this.events.set(eType, cur);
+            }
+            emit (eType) {
+                if (this.onceEvents.get(eType)) {
+                    let cur = this.onceEvents.get(eType);
+                    let args = [...arguments].slice(1);
+                    cur.forEach(eCallbackFn => {
+                        eCallbackFn.apply(this, args);
+                    });
+                    this.onceEvents.delete(eType);
+                } 
+                if (this.events.get(eType)) {
+                    let cur = this.events.get(eType);
+                    let args = [...arguments].slice(1);
+                    cur.forEach(eCallbackFn => {
+                        eCallbackFn.apply(this, args);
+                    });
+                }
+            }
+            off (eType) {
+                if (this.events.get(eType)) {
+                    this.events.delete(eType);
+                }
+                if (this.onceEvents.get(eType)) {
+                    this.onceEvents.delete(eType);
+                }
+            }
+            once (eType, eCallbackFn) {
+                let cur = this.onceEvents.get(eType) ? [...this.onceEvents.get(eType), eCallbackFn] : [eCallbackFn];
+                this.onceEvents.set(eType, cur);
+            }
+        }
+        let eventCase = new EventBus();
+        eventCase.on("eventType1", function () {
+            let args = [...arguments];
+            console.log("eventType11", args[0].name, args[0].age);
+        })
+        eventCase.once("eventType1", function () {
+            let args = [...arguments];
+            console.log("once eventType11", args[0].name, args[0].age);
+        })
+        eventCase.on("eventType1", function () {
+            let args = [...arguments];
+            console.log("eventType12", args[0].name, args[0].age);
+        })
+        eventCase.emit("eventType1", {
+            name: "lyj",
+            age: "25"
+        });
+        setTimeout(() => {
+            eventCase.emit("eventType1", {
+                name: "wjq",
+                age: "26"
+            });
+        }, 200)
+    </script>
+</body>
+</html>

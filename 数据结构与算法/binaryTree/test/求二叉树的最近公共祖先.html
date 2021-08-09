@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>求二叉树的最近公共祖先</title>
+</head>
+<body>
+    <script>
+        let root = {
+            val: 1,
+            left: {
+                val: 2
+            },
+            right: {
+                val: 3,
+                left: {
+                    val: 4,
+                    left: {
+                        val: 6
+                    }
+                },
+                right: {
+                    val: 5
+                }
+            }
+        }
+        function getCommonRoot (root, node1, node2) {
+            if (!root) {
+                return null;
+            }
+            if (root.val === node1 || root.val === node2) {
+                return root;
+            }
+            let left = getCommonRoot(root.left, node1, node2);
+            let right = getCommonRoot(root.right, node1, node2);
+            if (left && right) {
+                return root;
+            }
+            if (left === null) {
+                return right;
+            }
+            if (right === null) {
+                return left;
+            }
+        }
+        let res1 = getCommonRoot(root, 2, 6);
+        console.log("res1", res1.val);
+        let res2 = getCommonRoot(root, 5, 6);
+        console.log("res2", res2.val);
+        let res3 = getCommonRoot(root, 3, 4);
+        console.log("res3", res3.val);
+    </script>
+    <p>
+        二叉树的最近公共祖先的特点：
+        1.是两个节点的深度最大的公共祖先。
+        2.两个节点也有可能是自己的最近公共祖先。
+        思路：
+        递归：函数入参为二叉树当前根节点、节点1的值和节点2的值。
+        1.判断当前根节点是否为空，是则返回null。
+        2.判断当前根节点的值是否和node1Value或node2Value相等，如果相等则返回当前根节点。
+        3.对当前根节点的左子节点和右子节点分别调用函数递归处理。
+        （1）如果左子节点经过处理返回为null，且右子节点经过处理返回不为null，则右子节点递归处理的返回值为最近公共祖先。
+        （2）如果左子节点经过处理返回不为null，且右子节点经过处理返回null，则左子节点递归处理的返回值为最近公共祖先。
+        （3）否则返回当前根节点。
+    </p>
+</body>
+</html>

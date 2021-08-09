@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>对称二叉树</title>
+</head>
+<body>
+    <p>
+        给定一个二叉树，检查它是否是镜像对称的。
+    </p>
+    <script>
+        /**
+        * Definition for a binary tree node.
+        * function TreeNode(val, left, right) {
+        *     this.val = (val===undefined ? 0 : val)
+        *     this.left = (left===undefined ? null : left)
+        *     this.right = (right===undefined ? null : right)
+        * }
+        */
+        /**
+        * @param {TreeNode} root
+        * @return {boolean}
+        */
+        // 非递归（迭代）
+        // var isSymmetric = function (root) {
+        //     if (!root) return;
+        //     let queue = [[root.left, root.right]];
+        //     while (queue.length > 0) {
+        //         let [left, right] = queue.shift();
+        //         if (!left && !right) continue;
+        //         if (!left || !right || left.val !== right.val) {
+        //             return false;
+        //         }
+        //         queue.push([left.left, right.right]);
+        //         queue.push([left.right, right.left]);
+        //     }
+        //     return true;
+        // };
+
+        // 递归
+        var isSymmetric = function (root) {
+            if (!root) return;
+            let result = compare(root.left, root.right);
+            return result;
+        };
+        var compare = function (left, right) {
+            if (!left && !right) {
+                return true;
+            } else if (!left || !right || left.val !== right.val) {
+                return false;
+            }
+            let outRes = compare(left.left, right.right);
+            let innerRes = compare(left.right, right.left);
+            return (outRes && innerRes) ? true : false;
+        }
+    </script>
+    <p>
+        思路：
+        根据镜像对称二叉树的特点可知，它需要满足如下条件：
+        1.每个节点的左子节点的左孙子节点的值等于该节点的右子节点的右孙子节点的值，并且每个节点的左子节点的右孙子节点的值等于该节点的右子节点的左孙子节点的值。
+        2.对于镜像对称二叉树的根节点来说，左子节点的值等于右子节点的值。
+        解法一：非递归（迭代）
+        1.非递归解法需要创建一个队列，用于存放所有需要检查的节点，其中节点内容成对出现，所以在队列中每对节点以数组的形式存放，即[当前节点的左子节点的左孙子节点, 当前节点的右子节点的右孙子节点]，[当前节点的左子节点的右孙子节点, 当前节点的右子节点的左孙子节点]。
+        2.首先，判断根节点是否为空，为空返回false；不为空则创建队列，并且将根节点的左子节点和右子节点存放于数组中并且添加到队列中。
+        3.迭代条件为队列的长度大于0，即队列中依然存在未检查的节点对。
+        4.迭代逻辑：
+            （1）从队列头部取出一对节点进行检查，以解构的形式取出需要检查的两个节点left和right。
+            （2）如果left和right都为null，则继续后面的逻辑。
+            （3）如果left和right两者中有一个为null，或者left和right都不为null但是值不想等，则返回false。
+            （4）以left的左子节点和right的右子节点以数组形式push到队列中，以left的右子节点和right的左子节点以数组形式push到队列中，接着进行循环。
+        解法二：递归
+        1.递归解法本质上是将非递归解法的迭代逻辑封装成一个compare函数并返回结果。
+        2.compare函数只负责比较需要检查的两个节点，并对其子节点进行递归处理。
+        3.递归逻辑：
+            （1）比较当前的left和right，如果都为null返回true。
+            （2）如果left或right有一方为null，或者left和right都不为null但是值不相等，则返回false。
+            （3）否则对left的左子节点和right的右子节点，left的右子节点和right的左子节点进行compare比较，都返回true则返回true，否则返回false。
+    </p>
+</body>
+</html>
