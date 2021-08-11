@@ -1,0 +1,3 @@
+·HTML Templates：提供一个template标签来存放需要但是不是立即渲染的HTML代码。
+
+·content：template元素提供一个只读属性content，用于返回这个template里边的内容，返回的结果是一个DocumentFragment。

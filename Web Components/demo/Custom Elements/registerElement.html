@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>registerElement(已废弃)</title>
+</head>
+<body>
+    <script>
+        // document.registerElement("x-foo", {
+        //     prototype: Object.create(HTMLElement.prototype, {
+        //         createdCallback: {
+        //             value: function () {}
+        //         }
+        //     })
+        // })
+        // document.registerElement('button-hello', {
+        //     prototype: Object.create(HTMLButtonElement.prototype, {
+        //         createdCallback: {
+        //             value: function createdCallback() {
+        //                 this.innerHTML = '<button>hello world</button>'
+        //                 this.addEventListener('click', () => {
+        //                     alert('hello world')
+        //                 })
+        //             }
+        //         }
+        //     })
+        // })
+        document.registerElement('button-hello', {
+            prototype: Object.create(HTMLButtonElement.prototype, {
+                createdCallback: {
+                    value: function createdCallback() {
+                        this.addEventListener('click', () => {
+                            alert('hello world')
+                        })
+                    }
+                }
+            }),
+            extends: 'button'
+        })
+    </script>
+    <div>
+        <!-- <x-foo></x-foo>
+        <button-hello></button-hello> -->
+        <button is="button-hello">hello world</button>
+    </div>
+</body>
+</html>
