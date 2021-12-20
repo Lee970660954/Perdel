@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>demo1</title>
+</head>
+<body>
+    <my-button text="Hello">
+        <p slot="my-text">Another Text from outside</p>
+    </my-button>
+    <template id="myButton">
+        <style>
+            #buttton {
+                width: 60px;
+                height: 30px;
+                cursor: pointer;
+                color: blue;
+                border: 0;
+                border-radius: 5px;
+                background-color: #F0F0F0;
+            }
+        </style>
+        <button id="buttton">Add</button>
+        <p><slot name="my-text">My Default Text</slot></p>
+        <ul id="text-list"></ul>
+    </template>
+    <script>
+        const Texts = [
+            'My lady, Hello!',
+            'BuiBuiBui',
+            'BiliBili',
+            'Haiwei is NO.1'
+        ];
+        class MyButton extends HTMLElement {
+            constructor () {
+                super();
+                const template = document.getElementById("myButton");
+                const content = template.content.cloneNode(true);
+                this.button = content.querySelector("#buttton");
+                this.textList = content.querySelector("#text-list");
+                // this.appendChild(content);
+                this.attachShadow({ mode: 'open' }).appendChild(content);
+                console.log("constructor");
+            }
+            // Web Component被添加到Dom时，会调用这个生命周期钩子函数，这个函数只会被执行一次。可以在这个回调函数中完成一些初始化操作。
+            connectedCallback () {
+                const text = this.getAttribute("text");
+                this.button.innerHTML = text;
+                this.button.addEventListener("click", (e) => {
+                    // this.onClick(text);
+                    const li = document.createElement('li');
+                    li.innerText = Texts[Math.floor(Math.random() * 4)];
+                    this.textList.appendChild(li);
+                    this.dispatchEvent(new CustomEvent("onClick", {
+                        detail: text
+                    }))
+                })
+                console.log("connectedCallback");
+            }
+            // Web Component被从文档Dom中删除时，会调用这个生命周期钩子函数，这个函数只会被执行一次。可以在这个回调函数中完成一些销毁操作。
+            disconnectedCallback () {
+                console.log("disconnectedCallback");
+            }
+            // Web Component被移动到新文档时，会调用这个生命周期钩子函数。
+            adoptedCallback () {
+                console.log("adoptedCallback");
+            }
+            // Web Component被监听的属性发生变化时，会调用这个生命周期钩子函数
+            attributeChangedCallback () {
+                console.log("attributeChangedCallback");
+            }
+            // static get observedAttributes() {
+            //     return ['text'];
+            // }
+            // attributeChangedCallback(name, oldVal, newVal) {
+            //     this[name] = newVal;
+            //     this.render();
+            // }
+            // render() {
+            //     console.log(this.text)
+            //     this.button.innerHTML = this.text ;
+            // }
+            get text () {
+                console.log("get text", this.getAttribute('text'))
+                return this.getAttribute('text');
+            }
+            set text (value) {
+                console.log("set text", value);
+                this.setAttribute('text', value);
+            }
+        }
+        window.customElements.define("my-button", MyButton);
+    </script>
+    <script>
+        const myButton = document.querySelector("my-button");
+        // myButton.onClick = value => {
+        //     console.log("value", value);
+        // }
+        myButton.addEventListener("onClick", value => {
+            console.log("value", value);
+        })
+        setTimeout(() => {
+            myButton.text = "World";
+        }, 1000)
+    </script>
+</body>
+</html>

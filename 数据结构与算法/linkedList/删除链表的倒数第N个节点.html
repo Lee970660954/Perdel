@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>删除链表的倒数第N个节点</title>
+</head>
+<body>
+    <script>
+        const head = {
+            val: 1,
+            next: null
+        };
+        // head.next = {
+        //     val: 2,
+        //     next: null
+        // }
+        // head.next.next = {
+        //     val: 3,
+        //     next: null
+        // }
+        // head.next.next.next = {
+        //     val: 4,
+        //     next: null
+        // }
+        // head.next.next.next.next = {
+        //     val: 5,
+        //     next: null
+        // }
+        const linkList = head;
+        console.log("linkList1", linkList)
+
+        var removeNthFromEnd = function(head, n) {
+            let dummy = {
+                val: 0,
+                next: null
+            };
+            dummy.next = head;
+            let len = 0;
+            let curNode = head;
+            while (curNode) {
+                len++;
+                curNode = curNode.next;
+            }
+            let target = len - n;
+            let targetNode = dummy;
+            while (target > 0) {
+                target--;
+                targetNode = targetNode.next;
+            }
+            targetNode.next = targetNode.next.next;
+            return dummy.next;
+        };
+        removeNthFromEnd(head, 1)
+        console.log("linkList2", linkList)
+    </script>
+</body>
+</html>

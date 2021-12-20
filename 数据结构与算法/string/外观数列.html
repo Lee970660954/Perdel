@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>外观数列</title>
+</head>
+<body>
+    <script>
+        var countAndSay = function(n) {
+            if (n === 1) return "1";
+            let pre = countAndSay(n - 1);
+            let result = "";
+            let count = 1;
+            for (let i = 0; i < pre.length; i++) {
+                if (pre[i] == pre[i + 1]) {
+                    count++;
+                } else {
+                    result += count + pre[i];
+                    count = 1;
+                }
+            }
+            return result;
+        };
+        const result = countAndSay(5);
+        console.log("result", result);
+    </script>
+</body>
+</html>

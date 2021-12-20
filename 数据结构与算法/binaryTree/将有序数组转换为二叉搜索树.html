@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>将有序数组转换为二叉搜索树</title>
+</head>
+<body>
+    <p>
+        给你一个整数数组nums，其中元素已经按升序排列，请你将其转换为一棵高度平衡二叉搜索树。
+        高度平衡二叉树满足的条件：每个节点的左右两个子数的高度差的绝对值不超过1.
+    </p>
+    <script>
+        /**
+         * Definition for a binary tree node.
+         * function TreeNode(val, left, right) {
+         *     this.val = (val===undefined ? 0 : val)
+         *     this.left = (left===undefined ? null : left)
+         *     this.right = (right===undefined ? null : right)
+         * }
+         */
+        /**
+         * @param {number[]} nums
+         * @return {TreeNode}
+         */
+        var sortedArrayToBST = function(nums) {
+            if (!nums.length) return null;
+            let root = new TreeNode(null);
+            if (nums.length > 1) root.left = sortedArrayToBST(nums.splice(0, nums.length/2));
+            root.val = nums[0];
+            root.right = sortedArrayToBST(nums.splice(1, nums.length - 1));
+            return root;
+        };
+    </script>
+    <p>
+        思路：
+        1.高度平衡的二叉搜索树满足的条件：
+        （1）二叉树的每个节点的左右子树的高度差的绝对值不大于1.
+        （2）二叉树的每个节点的左子节点的值要小于该节点，且右子节点的值要大于该节点。
+        2.采用递归方式，利用数组的splice方法完成使每个节点满足上面的两个条件。
+        （1）首先判断有序数组是否为空，为空则返回null。
+        （2）创建root节点，判断如果有序数组的长度大于1，则root节点的左子节点为nums.splice(0, nums.length/2)，将nums的前半部分元素从nums中删除并作为当前节点的左子节点的参数来遍历。
+        （3）将nums[0]的val值赋值给当前节点的val，当前节点的右子节点为nums.splice(1, nums.length - 1)，将nums从索引1开始的后半部分删除并作为当前节点的右子节点的参数来遍历。
+        （4）最后返回当前节点。
+    </p>
+</body>
+</html>
