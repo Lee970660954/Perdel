@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS事件循环机制2</title>
+</head>
+<body>
+    <script>
+        setTimeout(_ => console.log(4))
+
+        new Promise(resolve => {
+            resolve()
+            console.log(1)
+        }).then(_ => {
+            console.log(3)
+            Promise.resolve().then(_ => {
+                console.log('before timeout')
+            }).then(_ => {
+                Promise.resolve().then(_ => {
+                console.log('also before timeout')
+                })
+            })
+        })  
+
+        console.log(2)
+
+    </script>
+    <!-- 1, 2, 3, before timeout, also before timeout, 4 -->
+</body>
+</html>
