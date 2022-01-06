@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        obj = {
+            func() {
+                const arrowFunc = () => {
+                    console.log(this._name)
+                }
+
+                return arrowFunc
+            },
+
+            _name: "obj",
+        }
+
+        obj.func()()
+
+        func = obj.func
+        func()()
+
+        obj.func.bind({ _name: "newObj" })()()
+
+        obj.func.bind()()()
+
+        obj.func.bind({ _name: "bindObj" }).apply({ _name: "applyObj" })()
+
+    </script>
+</body>
+</html>

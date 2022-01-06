@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>打乱数组</title>
+</head>
+<body>
+    <script>
+        /**
+         * @param {number[]} nums
+         */
+        var Solution = function(nums) {
+            this.nums = nums;
+        };
+
+        /**
+         * @return {number[]}
+         */
+        Solution.prototype.reset = function() {
+            return this.nums;
+        };
+
+        /**
+         * @return {number[]}
+         */
+        Solution.prototype.shuffle = function() {
+            let aNums = this.nums.slice(0);
+            for (let i = 0; i < aNums.length; i++) {
+                let nI = Math.floor(Math.random() * aNums.length);
+                let temp = aNums[nI];
+                aNums[nI] = aNums[i];
+                aNums[i] = temp;
+            }
+            return aNums;
+        };
+
+        /**
+         * Your Solution object will be instantiated and called as such:
+         * var obj = new Solution(nums)
+         * var param_1 = obj.reset()
+         * var param_2 = obj.shuffle()
+         */
+        var solution = new Solution([1, 2, 3]);
+        console.log(solution, solution.shuffle(), solution.reset() ,solution.shuffle())
+    </script>
+</body>
+</html>

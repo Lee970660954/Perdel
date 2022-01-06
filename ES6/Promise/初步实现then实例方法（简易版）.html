@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>初步实现then实例方法（简易版）</title>
+</head>
+<body>
+    <script>
+        // 用Symbol定义三种状态，防止外界改变状态。
+        const Pending = Symbol("Pending"); // 进行中
+        const Fulfilled = Symbol("Fulfilled"); // 已成功
+        const Rejected = Symbol("Rejected"); // 已失败
+        class Promise {
+            constructor (executor) {
+                this.status = Pending; // 存储Promise的状态
+                this.value = undefined; // 存储executor函数中业务代码执行成功的结果
+                this.reason = undefined; // 存储executor函数中业务代码执行失败的原因
+                const resolve = value => {
+                    // 只有当状态为Pending才会改变，来保证一旦状态改变就不会再变。
+                    if (this.status === Pending) {
+                        this.status = Fulfilled;
+                        this.value = value;
+                    }
+                };
+                const reject = reason => {
+                    // 只有当状态为Pending才会改变，来保证一旦状态改变就不会再变。
+                    if (this.status === Pending) {
+                        this.status = Rejected;
+                        this.reason = reason;
+                    }
+                }
+                executor(resolve, reject);
+            }
+            then (onFulfilled, onRejected) {
+                if (this.status === Fulfilled) {
+                    if (onFulfilled && typeof onFulfilled === "function") {
+                        onFulfilled(this.value);
+                    }
+                }
+                if (this.status === Rejected) {
+                    if (onRejected && typeof onRejected === "function") {
+                        onRejected(this.reason);
+                    }
+                }
+            }
+        }
+    </script>
+    <script>
+        let p = new Promise((resolve, reject) => {
+            console.log("executor");
+            resolve("执行成功");
+            // reject("执行失败");
+        }).then(val => {
+            console.log(val);
+        }, res => {
+            console.log(res);
+        })
+    </script>
+</body>
+</html>

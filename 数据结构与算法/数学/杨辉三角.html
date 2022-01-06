@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>杨辉三角</title>
+</head>
+<body>
+    <script>
+        /**
+         * @param {number} numRows
+         * @return {number[][]}
+         */
+        var generate = function(numRows) {
+            if (numRows === 1) {
+                return [[1]];
+            }
+            if (numRows === 2) {
+                return [[1], [1, 1]];
+            }
+            let row = [[1], [1, 1]];
+            let rowrow = [1, 1];
+            numRows = numRows - 2;
+            while (numRows--) {
+                let temp = [];
+                for (let i = 0; i < rowrow.length - 1; i++) {
+                    temp.push(rowrow[i] + rowrow[i + 1]);
+                }
+                temp.push(1);
+                temp.unshift(1);
+                row.push(temp);
+                rowrow = temp;
+            }
+            return row;
+        };
+        console.log(generate(5))
+    </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>初步搭建Promise的构造函数</title>
+</head>
+<body>
+    <script>
+        // 用Symbol定义三种状态，防止外界改变状态。
+        const Pending = Symbol("Pending"); // 进行中
+        const Fulfilled = Symbol("Fulfilled"); // 已成功
+        const Rejected = Symbol("Rejected"); // 已失败
+        class Promise {
+            constructor (executor) {
+                this.status = Pending; // 存储Promise的状态
+                const resolve = () => {
+                    // 只有当状态为Pending才会改变，来保证一旦状态改变就不会再变。
+                    if (this.status === Pending) {
+                        this.status = Fulfilled;
+                    }
+                };
+                const reject = () => {
+                    // 只有当状态为Pending才会改变，来保证一旦状态改变就不会再变。
+                    if (this.status === Pending) {
+                        this.status = Rejected;
+                    }
+                }
+                executor(resolve, reject);
+            }
+        }
+    </script>
+    <script>
+        let p = new Promise((resolve, reject) => {
+            console.log("executor");
+            resolve("init");
+        })
+    </script>
+</body>
+</html>

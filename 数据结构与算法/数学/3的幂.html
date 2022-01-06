@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3的幂</title>
+</head>
+<body>
+    <script>
+        /**
+         * @param {number} n
+         * @return {boolean}
+         */
+        var isPowerOfThree = function(n) {
+            if(n < 1){
+                return false
+            }
+            while(n%3 == 0){
+                n = n/3
+            }
+            return n == 1
+        };
+        console.log(isPowerOfThree(9));
+    </script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>缺失数字</title>
+</head>
+<body>
+    <script>
+        /**
+         * @param {number[]} nums
+         * @return {number}
+         */
+        // var missingNumber = function(nums) {
+        //     let len = nums.length;
+        //     let list = [];
+        //     for (let i = 0; i < len + 1; i++) {
+        //         list.push(i);
+        //     }
+        //     for (let j = 0; j < len; j++) {
+        //         if (list.indexOf(nums[j]) !== -1) {
+        //             list.splice(list.indexOf(nums[j]), 1);
+        //         }
+        //     }
+        //     return list[0];
+        // };
+        // var missingNumber = function(nums) {
+        //     let len = nums.length;
+        //     let result;
+        //     for (let i = 0; i < len + 1; i++) {
+        //         if (nums.indexOf(i) === -1) {
+        //             result = i;
+        //         }
+        //     }
+        //     return result;
+        // }
+        // var missingNumber = function(nums) {
+        //     let result = 0;
+        //     for (let i = 0; i < nums.length; i++) {
+        //         result ^= nums[i] ^ (i + 1);
+        //     }
+        //     return result;
+        // }
+        var missingNumber = function(nums) {
+            let max = nums.length;
+            let sum1 = 0;
+            let sum2 = nums.reduce((prev, curr) => {
+                return prev + curr;
+            })
+            while (max >= 0) {
+                sum1 += max--;
+            }
+            return sum1 - sum2;
+        }
+        console.log(missingNumber([3,0,1]))
+    </script>
+</body>
+</html>
