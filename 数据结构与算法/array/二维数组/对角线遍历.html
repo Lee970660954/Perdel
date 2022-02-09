@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>对角线遍历</title>
+</head>
+<body>
+    <script>
+        var mat = [[1,2,3],[4,5,6],[7,8,9]];
+        /**
+        * @param {number[][]} mat
+        * @return {number[]}
+        */
+        var findDiagonalOrder = function(mat) {
+            let m = mat.length;
+            let n = mat[0].length;
+            let res = [];
+            let i = 0;
+            let j = 0;
+            for (let c = 0; c < m * n; c++) {
+                res.push(mat[i][j]);
+                if ((i + j) % 2 === 0) {
+                    if (j === n -1) {
+                        i++;
+                    } else if (i === 0) {
+                        j++;
+                    } else {
+                        i--;
+                        j++;
+                    }
+                } else {
+                    if (i === m - 1) {
+                        j++
+                    } else if (j === 0) {
+                        i++
+                    } else {
+                        i++;
+                        j--;
+                    }
+                }
+            }
+            return res;
+        };
+        console.log(findDiagonalOrder(mat))
+    </script>
+</body>
+</html>

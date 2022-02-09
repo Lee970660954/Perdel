@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>扩展运算符</title>
+</head>
+<body>
+    <script>
+        let ary = [1, [2, [3, [4, 5]]], 6];
+        while (ary.some(Array.isArray)) {
+            ary = [].concat(...ary);
+        }
+        console.log(ary)
+    </script>
+</body>
+</html>

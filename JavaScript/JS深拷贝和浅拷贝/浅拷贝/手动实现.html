@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>手动实现</title>
+</head>
+<body>
+    <script>
+        let obj = {
+            name: "lyj",
+            age: 26,
+            o: {
+                val: 100
+            }
+        }
+        function shallowClone (target) {
+            if (typeof target === "object" && target !== null) {
+                const cloneTarget = Array.isArray(target) ? [] : {};
+                for (let key in target) {
+                    if (target.hasOwnProperty(key)) {
+                        cloneTarget[key] = target[key];
+                    }
+                }
+                return cloneTarget;
+            } else {
+                return target;
+            }
+        }
+        const nObj = shallowClone(obj);
+        nObj.name = "wjq";
+        nObj.o.val = 101; 
+        console.log("nObj", nObj, obj);
+    </script>
+</body>
+</html>

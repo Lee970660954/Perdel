@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>forEach</title>
+</head>
+<body>
+    <script>
+        let nums = [1, 2, 3];
+        // nums.forEach((item, index) => {
+        //     return;//无效
+        // })
+        // try {
+        //     nums.forEach((item, index) => {
+        //         console.log(item)
+        //         throw new Error("pause")
+        //     })
+        // } catch (error) {
+        //     console.log("error", error);
+        // }
+
+        // nums.some((item, index) => {
+        //     console.log(item);
+        //     return true;//无效
+        // })
+        nums.every((item, index) => {
+            console.log(item);
+            return false;//无效
+        })
+
+    </script>
+</body>
+</html>

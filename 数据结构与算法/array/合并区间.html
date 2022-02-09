@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>合并区间</title>
+</head>
+<body>
+    <script>
+        /**
+        * @param {number[][]} intervals
+        * @return {number[][]}
+        */
+        // var intervals = [[15,18],[1,3],[2,6],[8,10]];
+        var intervals = [[1,4],[4,5]];
+        var merge = function(intervals) {
+            intervals.sort((a, b) => a[0] - b[0]);
+            for (let i = 0; i < intervals.length - 1; i++) {
+                let e1 = intervals[i][1];
+                let s2 = intervals[i + 1][0];
+                let e2 = intervals[i + 1][1];
+                if (e1 >= s2) {
+                    intervals[i][1] = e1 > e2 ? e1 : e2;
+                    intervals.splice(i + 1, 1);
+                    i--;
+                }
+            }
+            return intervals;
+        };
+        console.log(merge(intervals));
+    </script>
+</body>
+</html>

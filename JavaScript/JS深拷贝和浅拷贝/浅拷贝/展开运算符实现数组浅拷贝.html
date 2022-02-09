@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>展开运算符实现数组浅拷贝</title>
+</head>
+<body>
+    <script>
+        let arr = ["lyj", 26, {val: 100}];
+        let nArr = [...arr];
+        nArr[0] = "wjq";
+        nArr[1] = 27;
+        nArr[2]["val"] = 101;
+        console.log("nArr", nArr, arr);
+    </script>
+</body>
+</html>

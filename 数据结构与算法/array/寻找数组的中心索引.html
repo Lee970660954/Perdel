@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>寻找数组的中心索引</title>
+</head>
+<body>
+    <script>
+        // var nums = [1, 7, 3, 6, 5, 6];
+        // var nums = [1, 2, 3];
+        var nums = [2, 1, -1];
+        /**
+        * @param {number[]} nums
+        * @return {number}
+        */
+        // var pivotIndex = function(nums) {
+        //     const len = nums.length;
+        //     let arrL = [];
+        //     let arrR = [];
+        //     let sumL = 0;
+        //     let sumR = 0;
+        //     let result = -1;
+        //     for (let i = 0; i < len; i++) {
+        //         arrL = nums.slice(0, i);
+        //         arrR = nums.slice(i + 1);
+        //         sumL = arrL.reduce((sum, cur) => {
+        //             return sum + cur;
+        //         }, 0);
+        //         sumR = arrR.reduce((sum, cur) => {
+        //             return sum + cur;
+        //         }, 0);
+        //         if (sumL === sumR) {
+        //             result = i;
+        //             return result;
+        //         }
+        //     }
+        //     return result;
+        // };
+        // var pivotIndex = function(nums) {
+        //     const len = nums.length;
+        //     let sum = nums.reduce((prev, cur) => {
+        //         return prev + cur;
+        //     }, 0);
+        //     let sumL = 0;
+        //     let sumR = sum - sumL;
+        //     let result = -1;
+        //     for (let i = 0; i < len; i++) {
+        //         let arrL = nums.slice(0, i);
+        //         sumL = arrL.reduce((prev, cur) => {
+        //             return prev + cur;
+        //         }, 0);
+        //         sumR = sum - sumL - nums[i];
+        //         if (sumL === sumR) {
+        //             result = i;
+        //             return result;
+        //         }
+        //     }
+        //     return result;
+        // }
+        var pivotIndex = function(nums) {
+            const len = nums.length;
+            let sum = nums.reduce((prev, cur) => {
+                return prev + cur;
+            }, 0);
+            let arrL = [];
+            let sumL = 0;
+            let result = -1;
+            for (let i = 0; i < len; i++) {
+                arrL = nums.slice(0, i);
+                sumL = arrL.reduce((prev, cur) => {
+                    return prev + cur;
+                }, 0);
+                if (sumL * 2 + nums[i] === sum) {
+                    result = i;
+                    return result;
+                }
+            }
+            return result;
+        }
+        console.log("pivotIndex", pivotIndex(nums))
+    </script>
+</body>
+</html>

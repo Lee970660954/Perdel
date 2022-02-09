@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>利用数组reduce递归</title>
+</head>
+<body>
+    <script>
+        let ary = [1, [2, [3, [4, 5]]], 6];
+        let result;
+        function myFlat (arr) {
+            return arr.reduce((pre, cur) => {
+                return pre.concat(Array.isArray(cur) ? myFlat(cur) : cur);
+            }, [])
+        }
+        result = myFlat(ary);
+        console.log(result);
+    </script>
+</body>
+</html>
