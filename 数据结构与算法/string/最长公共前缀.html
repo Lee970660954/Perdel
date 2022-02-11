@@ -7,7 +7,7 @@
     <title>最长公共前缀</title>
 </head>
 <body>
-    <script>
+    <!-- <script>
         // let strs = ["flower","flow","flight"];
         let strs = ["dog","racecar","car"];
         var longestCommonPrefix = function(strs) {
@@ -33,6 +33,52 @@
         };
         const result = longestCommonPrefix(strs);
         console.log("result", result);
+    </script> -->
+    <script>
+        // var strs = ["flower","flow","flight"];
+        var strs = ["dog","racecar","car"];
+        /**
+        * @param {string[]} strs
+        * @return {string}
+        */
+        // var longestCommonPrefix = function(strs) {
+        //     let res = "";
+        //     let shortestIdx = 0;
+        //     for (let i = 0; i < strs.length; i++) {
+        //         if (strs[i].length < strs[shortestIdx].length) {
+        //             shortestIdx = i;
+        //         }
+        //     }
+        //     let shortestStr = strs[shortestIdx];
+        //     for (let j = 0; j < shortestStr.length; j++) {
+        //         let subRes = shortestStr.substr(j, 1);
+        //         let flag = true;
+        //         for (let k = 0; k < strs.length; k++) {
+        //             if (strs[k][j] !== subRes) {
+        //                 flag = false;
+        //             }
+        //         }
+        //         if (!flag) {
+        //             return res;
+        //         }
+        //         res += subRes;
+        //     }
+        //     return res;
+        // };
+        var longestCommonPrefix = function(strs) {
+            let res = "";
+            for (let i = 0; i < strs[0].length; i++) {
+                if (strs.every(item => {
+                    return item[i] === strs[0][i];
+                })) {
+                    res += strs[0][i];
+                } else {
+                    break;
+                }
+            }
+            return res;
+        }
+        console.log(longestCommonPrefix(strs));
     </script>
 </body>
 </html>

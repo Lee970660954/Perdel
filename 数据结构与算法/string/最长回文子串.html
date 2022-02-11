@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>最长回文子串</title>
+</head>
+<body>
+    <script>
+        var s = "babad";
+        // var s = "cbbd";
+        // var s = "a";
+        // var s = "ac";
+        /**
+        * @param {string} s
+        * @return {string}
+        */
+        // var longestPalindrome = function(s) {
+        //     let resArr = [];
+        //     let res = "";
+        //     let arr = s.split("");
+        //     while (arr.length > 0) {
+        //         for (let i = 0; i < arr.length; i++) {
+        //             let cur = arr.slice(0, i + 1);
+        //             let reCur = cur.concat().reverse();
+        //             if (cur.every((item, index) => {
+        //                 return item === reCur[index];
+        //             })) {
+        //                 resArr.push(cur.join(""));
+        //             }
+        //         }
+        //         arr.shift();
+        //     }
+        //     resArr.map(item => {
+        //         if (item.length > res.length) {
+        //             res = item;
+        //         }
+        //     })
+        //     return res;
+        // };
+        var longestPalindrome = function(s) {
+            let res = "";
+            for (let i = 0; i < s.length; i++) {
+                let tempRes1 = s[i];
+                let tempRes2 = "";
+                let j = 1;
+                while (s[i - j] && s[i + j] && s[i - j] === s[i + j]) {
+                    tempRes1 = s[i - j] + tempRes1 + s[i + j];
+                    j++;
+                }
+                j = 1;
+                while (s[i - j] && s[i + j - 1] && s[i - j] === s[i + j - 1]) {
+                    tempRes2 = s[i - j] + tempRes2 + s[i + j - 1];
+                    j++;
+                }
+                res = (tempRes1.length >= tempRes2.length) ? (res.length >= tempRes1.length ? res : tempRes1) : (res.length >= tempRes2.length ? res : tempRes2);
+            }
+            return res;
+        }
+        console.log(longestPalindrome(s));
+    </script>
+</body>
+</html>

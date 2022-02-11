@@ -7,7 +7,7 @@
     <title>杨辉三角</title>
 </head>
 <body>
-    <script>
+    <!-- <script>
         /**
          * @param {number} numRows
          * @return {number[][]}
@@ -35,6 +35,29 @@
             return row;
         };
         console.log(generate(5))
+    </script> -->
+    <script>
+        /**
+        * @param {number} numRows
+        * @return {number[][]}
+        */
+        var generate = function(numRows) {
+            let res = [[1]];
+            for (let i = 1; i < numRows; i++) {
+                let subRes = [];
+                let curStandard = res[i - 1];
+                curStandard.unshift(0);
+                curStandard.push(0);
+                for (let j = 0; j < i + 1; j++) {
+                    subRes[j] = curStandard[j] + curStandard[j + 1];
+                }
+                curStandard.shift();
+                curStandard.pop();
+                res.push(subRes);
+            }
+            return res;
+        };
+        console.log(generate(5));
     </script>
 </body>
 </html>

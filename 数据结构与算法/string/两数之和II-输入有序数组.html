@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>两数之和II-输入有序数组</title>
+</head>
+<body>
+    <script>
+        var numbers = [2,7,11,15], target = 9;
+        var numbers = [2,3,4], target = 6;
+        var numbers = [-1,0], target = -1;
+        /**
+        * @param {number[]} numbers
+        * @param {number} target
+        * @return {number[]}
+        */
+        // var twoSum = function(numbers, target) {
+        //     let left = [];
+        //     let res = [];
+        //     for (let i = 0; i < numbers.length; i++) {
+        //         if (numbers[i] <= target) {
+        //             left.push({"index": i, "value": numbers[i]});
+        //         }
+        //     }
+        //     for (let j = 0; j < left.length; j++) {
+        //         let right = target - left[j].value;
+        //         if (numbers.indexOf(right) !== -1) {
+        //             (left[j].index + 1) > (numbers.indexOf(right) + 1) ? (res = [numbers.indexOf(right) + 1, left[j].index + 1]) : (res = [left[j].index + 1, numbers.indexOf(right) + 1]);
+        //         }
+        //     }
+        //     return res;
+        // };
+        var twoSum = function(numbers, target) {
+            let res = [];
+            let l = 0;
+            let r = numbers.length - 1;
+            while (l < r) {
+                if (numbers[l] + numbers[r] === target) {
+                    res = [l + 1, r + 1];
+                    return res;
+                } else if (numbers[l] + numbers[r] < target) {
+                    l++;
+                } else if (numbers[l] + numbers[r] > target) {
+                    r--;
+                }
+            }
+            return res;
+        };
+        console.log(twoSum(numbers, target));
+    </script>
+</body>
+</html>

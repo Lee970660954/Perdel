@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>翻转字符串里的单词</title>
+</head>
+<body>
+    <script>
+        // var s = "the sky is blue";
+        var s = "  hello    world  "
+        /**
+        * @param {string} s
+        * @return {string}
+        */
+        var reverseWords = function(s) {
+            s = s.replace(/^\s+|\s+$/g, "");
+            s = s.replace(/\s+/g, " ");
+            let res = ""
+            let arr = s.split(" ");
+            res = arr.reverse().join(" ");
+            return res;
+        };
+        console.log(reverseWords(s));
+    </script>
+</body>
+</html>

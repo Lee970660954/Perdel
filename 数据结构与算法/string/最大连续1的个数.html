@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>最大连续1的个数</title>
+</head>
+<body>
+    <script>
+        var nums = [1,1,0,1,1,1];
+        var nums = [1,0,1,1,0,1];
+        var nums = [1,1,0,1];
+        /**
+        * @param {number[]} nums
+        * @return {number}
+        */
+        // var findMaxConsecutiveOnes = function(nums) {
+        //     let str = nums.join("");
+        //     let newArr = str.split("0");
+        //     let res = 0;
+        //     newArr.map(item => {
+        //         if (item.length > res) {
+        //             res = item.length;
+        //         }
+        //     })
+        //     return res;
+        // };
+        var findMaxConsecutiveOnes = function(nums) {
+            let zero = -1;
+            let res = 0;
+            for (let i = 0; i < nums.length; i++) {
+                if (nums[i] === 0) {
+                    zero = i;
+                }
+                res = Math.max(res, i - zero);
+            }
+            return res;
+        }
+        console.log(findMaxConsecutiveOnes(nums));
+    </script>
+</body>
+</html>

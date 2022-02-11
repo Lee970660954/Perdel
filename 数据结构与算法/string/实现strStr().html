@@ -7,7 +7,7 @@
     <title>实现strStr()</title>
 </head>
 <body>
-    <script>
+    <!-- <script>
         let haystack = "aaaaa",
             needle = "bba";
         // function strStr (haystack, needle) {
@@ -65,6 +65,31 @@
         }
         const result = strStr(haystack, needle);
         console.log("result", result);
+    </script> -->
+
+    <script>
+        // var haystack = "hello", needle = "ll";
+        // var haystack = "aaaaa", needle = "bba";
+        var haystack = "", needle = "";
+        /**
+        * @param {string} haystack
+        * @param {string} needle
+        * @return {number}
+        */
+        var strStr = function(haystack, needle) {
+            if (!needle) return 0;
+            let nL = needle.length;
+            let res = -1
+            for (let i = 0; i < haystack.length - nL + 1; i++) {
+                let cur = haystack.slice(i, i + nL);
+                if (cur === needle) {
+                    res = i;
+                    return res;
+                }
+            }
+            return res;
+        };
+        console.log(strStr(haystack, needle));
     </script>
 </body>
 </html>

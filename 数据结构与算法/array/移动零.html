@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>移动零</title>
+</head>
+<body>
+    <script>
+        var nums = [0,1,0,3,12];
+        var nums = [0];
+        // var nums = [4,2,4,0,0,3,0,5,1,0];
+        /**
+        * @param {number[]} nums
+        * @return {void} Do not return anything, modify nums in-place instead.
+        */
+        var moveZeroes = function(nums) {
+            let slow = 0;
+            for (let fast = 0; fast < nums.length; fast++) {
+                if (nums[fast] !== 0) {
+                    nums[slow] = nums[fast];
+                    slow++;
+                }
+            }
+            for (let i = slow; i < nums.length; i++) {
+                nums[i] = 0;
+            }
+            return nums;
+        };
+        console.log(moveZeroes(nums));
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>反转字符串中的单词III</title>
+</head>
+<body>
+    <script>
+        var s = "Let's take LeetCode contest";
+        /**
+        * @param {string} s
+        * @return {string}
+        */
+        // var reverseWords = function(s) {
+        //     let arr = s.split(" ");
+        //     let res = "";
+        //     arr = arr.map(item => {
+        //         let subArr = item.split("");
+        //         let newItem;
+        //         subArr.reverse();
+        //         newItem = subArr.join("");
+        //         return newItem;
+        //     })
+        //     res = arr.join(" ");
+        //     return res;
+        // };
+        var reverseWords = function(s) {
+            s += " ";
+            let slow = 0;
+            let fast = 0;
+            let res = "";
+            for (let i = 0; i < s.length; i++) {
+                if (s[i] === " ") {
+                    fast = i;
+                    for (let j = fast - 1; j >= slow; j--) {
+                        res += s[j];
+                    }
+                    if (fast !== s.length - 1) {
+                        res += " ";
+                        slow = fast + 1;
+                    }
+                }
+            }
+            return res;
+        }
+        console.log(reverseWords(s));
+    </script>
+</body>
+</html>

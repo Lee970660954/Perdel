@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数组拆分</title>
+</head>
+<body>
+    <script>
+        // var nums = [1,4,3,2];
+        // var nums = [6,2,6,5,1,2];
+        var nums = [7,3,1,0,0,6];
+        /**
+        * @param {number[]} nums
+        * @return {number}
+        */
+        var arrayPairSum = function(nums) {
+            let res = 0;
+            for (let i = 0; i < nums.length - 1; i++) {
+                for (let j = 0; j < nums.length - 1 - i; j++) {
+                    if (nums[j] > nums[j + 1]) {
+                        let temp = nums[j];
+                        nums[j] = nums[j + 1];
+                        nums[j + 1] = temp;
+                    }
+                }
+            }
+            for (let k = 0; k < nums.length; k++) {
+                if (k%2 === 0) {
+                    res += nums[k];
+                }
+            }
+            return res;
+        };
+        console.log(arrayPairSum(nums));
+    </script>
+</body>
+</html>
