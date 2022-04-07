@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>完全平方数</title>
+</head>
+<body>
+    <script>
+        /**
+        * @param {number} n
+        * @return {number}
+        */
+        var numSquares = function(n) {
+            const queue = [];
+            const visitedSet = new Set();
+            let nums;
+            let step = 1;
+            let m = 1;
+            while (m * m <= n) {
+                if (m * m === n) {
+                    return step;
+                }
+                queue.push(m * m);
+                m++;
+            }
+            nums = [...queue];
+            while (queue.length) {
+                step++;
+                let size = queue.length;
+                for (let i = 0; i < size; i++) {
+                    let cur = queue.shift();
+                    if (!visitedSet.has(cur)) {
+                        visitedSet.add(cur);
+                    }
+                    for (let j = 0; j < nums.length; j++) {
+                        let curAdded = cur + nums[j];
+                        if (curAdded === n) {
+                            return step;
+                        } else if (curAdded > n) {
+                            break;
+                            // continue;
+                        } else {
+                            if (!visitedSet.has(curAdded)) {
+                                visitedSet.add(curAdded);
+                                queue.push(curAdded);
+                            }
+                        }
+                    }
+                }
+            }
+            return 0;
+        };
+        console.log(numSquares(12));
+    </script>
+</body>
+</html>

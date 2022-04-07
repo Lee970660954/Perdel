@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>目标和</title>
+</head>
+<body>
+    <script>
+        var nums = [1,1,1,1,1], target = 3;
+        /**
+        * @param {number[]} nums
+        * @param {number} target
+        * @return {number}
+        */
+        var findTargetSumWays = function(nums, target) {
+            let count = 0;
+            dfs(0, 0);
+            return count;
+            function dfs (sum, layer) {
+                if (layer === nums.length) {
+                    if (sum === target) {
+                        count++;
+                    }
+                    return;
+                }
+                const nLayer = layer + 1;
+                dfs(sum + nums[layer], nLayer);
+                dfs(sum - nums[layer], nLayer);
+            }
+        };
+        /**
+        * @param {number[]} nums
+        * @param {number} target
+        * @return {number}
+        */
+        console.log(findTargetSumWays(nums, target))
+    </script>
+</body>
+</html>

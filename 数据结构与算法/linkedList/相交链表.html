@@ -8,6 +8,55 @@
 </head>
 <body>
     <script>
+        function ListNode(val, next) {
+            this.val = (val===undefined ? 0 : val)
+            this.next = (next===undefined ? null : next)
+        }
+        let node11 = new ListNode(4);
+        let node12 = new ListNode(1);
+        let node13 = new ListNode(8);
+        let node14 = new ListNode(4);
+        let node15 = new ListNode(5);
+        node11.next = node12;
+        node12.next = node13;
+        node13.next = node14;
+        node14.next = node15;
+        let headA = node11;
+        console.log("headA", headA);
+
+        let node21 = new ListNode(5);
+        let node22 = new ListNode(6);
+        let node23 = new ListNode(1);
+        let node24 = node13;
+        let node25 = node14;
+        let node26 = node15;
+        node21.next = node22;
+        node22.next = node23;
+        node23.next = node24;
+        node24.next = node25;
+        node25.next = node26;
+        let headB = node21;
+        console.log("headB", headB);
+
+        // let node11 = new ListNode(1);
+        // let headA = node11;
+        // console.log("headA", headA);
+
+        // let node21 = node11;
+        // let headB = node21;
+        // console.log("headB", headB);
+
+        // let node11 = new ListNode(3);
+        // let headA = node11;
+        // console.log("headA", headA);
+
+        // let node21 = new ListNode(2);
+        // let node22 = node11;
+        // node21.next = node22;
+        // let headB = node21;
+        // console.log("headB", headB);
+
+
         /**
         * Definition for singly-linked list.
         * function ListNode(val) {
@@ -21,9 +70,65 @@
         * @param {ListNode} headB
         * @return {ListNode}
         */
+        // var getIntersectionNode = function(headA, headB) {
+        //     if (!headA || !headB) {
+        //         return null;
+        //     }
+        //     let lenA = 1;
+        //     let lenB = 1;
+        //     let curA = headA;
+        //     let curB = headB;
+        //     while (curA.next) {
+        //         lenA++;
+        //         curA = curA.next;
+        //     }
+        //     curA = headA;
+        //     while (curB.next) {
+        //         lenB++;
+        //         curB = curB.next;
+        //     }
+        //     curB = headB;
+        //     let distance = Math.abs(lenA - lenB);
+        //     let longerList = curA;
+        //     let shorterList = curB;
+        //     if (distance > 0) {
+        //         longerList = lenA > lenB ? curA : curB;
+        //         shorterList = lenA > lenB ? curB : curA;
+        //     }
+        //     while (distance > 0) {
+        //         longerList = longerList.next;
+        //         distance--;
+        //     }
+        //     while (shorterList) {
+        //         if (shorterList === longerList) {
+        //             return shorterList;
+        //         }
+        //         longerList = longerList.next;
+        //         shorterList = shorterList.next;
+        //     }
+        //     return shorterList;
+        // };
         var getIntersectionNode = function(headA, headB) {
-            let lA 
-        };
+            if (!headA || !headB) {
+                return null;
+            }
+            let curA = headA;
+            let curB = headB;
+            while (curA || curB) {
+                if (curA === curB) {
+                    return curA;
+                }
+                curA = curA.next;
+                curB = curB.next;
+                if (!curA && curB) {
+                    curA = headB;
+                } else if (curA && !curB) {
+                    curB = headA;
+                }
+            }
+            return curA;
+        }
+        console.log(getIntersectionNode(headA, headB));
     </script>
 </body>
 </html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二叉树的后序遍历</title>
+</head>
+<body>
+    <script>
+        /**
+        * Definition for a binary tree node.
+        * function TreeNode(val, left, right) {
+        *     this.val = (val===undefined ? 0 : val)
+        *     this.left = (left===undefined ? null : left)
+        *     this.right = (right===undefined ? null : right)
+        * }
+        */
+        /**
+        * @param {TreeNode} root
+        * @return {number[]}
+        */
+        // 迭代写法
+        var postorderTraversal = function(root) {
+            const STACK = [];
+            const ANSWER = [];
+            if (!root) {
+                return ANSWER;
+            }
+            STACK.push(root);
+            while (STACK.length) {
+                let cur = STACK.pop();
+                ANSWER.unshift(cur.val);
+                if (cur.left) {
+                    STACK.push(cur.left);
+                }
+                if (cur.right) {
+                    STACK.push(cur.right);
+                }
+            }
+            return ANSWER;
+        };
+
+        // 递归写法
+        // var postorderTraversal = function(root) {
+        //     const ANSWER = [];
+        //     function recursion (root) {
+        //         if (!root) {
+        //             return;
+        //         }
+        //         recursion(root.left);
+        //         recursion(root.right);
+        //         ANSWER.push(root.val);
+        //     }
+        //     if (!root) {
+        //         return ANSWER;
+        //     }
+        //     recursion(root);
+        //     return ANSWER;
+        // };  
+
+    </script>
+</body>
+</html>

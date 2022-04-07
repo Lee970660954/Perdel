@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>岛屿数量</title>
+</head>
+<body>
+    <script>
+        let grid = [
+            ["1", "1", "0", "0", "0"],
+            ["1", "1", "0", "0", "0"],
+            ["0", "0", "1", "0", "0"],
+            ["0", "0", "0", "1", "1"]
+        ];
+        var dfs = function (grid, y, x) {
+            if (y < 0 || y > grid.length - 1 || x < 0 || x > grid[0].length - 1 || grid[y][x] === "0") {
+                return;
+            }
+            grid[y][x] = "0";
+            dfs(grid, y - 1, x);
+            dfs(grid, y, x + 1);
+            dfs(grid, y + 1, x);
+            dfs(grid, y, x - 1);
+        }
+        /**
+        * @param {character[][]} grid
+        * @return {number}
+        */
+        var numIslands = function(grid) {
+            let count = 0;
+            for (let y = 0; y < grid.length; y++) {
+                for (let x = 0; x < grid[0].length; x++) {
+                    if (grid[y][x] === "1") {
+                        count++;
+                        dfs(grid, y, x);
+                    }
+                }
+            }
+            return count;
+        };
+        console.log(numIslands(grid));
+    </script>
+</body>
+</html>

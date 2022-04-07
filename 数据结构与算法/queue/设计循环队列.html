@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>设计循环队列</title>
+</head>
+<body>
+    <script>
+        /**
+        * @param {number} k
+        */
+        var MyCircularQueue = function(k) {
+            this.length = k;
+            this.queue = new Array(k).fill(null);
+            this.head = 0;
+            this.tail = 0;
+        };
+
+        /** 
+        * @param {number} value
+        * @return {boolean}
+        */
+        MyCircularQueue.prototype.enQueue = function(value) {
+            if (this.isFull()) {
+                return false;
+            }
+            this.queue[this.tail] = value;
+            this.tail = (this.tail + 1) % this.length;
+            return true;
+        };
+
+        /**
+        * @return {boolean}
+        */
+        MyCircularQueue.prototype.deQueue = function() {
+            if (this.isEmpty()) {
+                return false;
+            }
+            this.queue[this.head] = null;
+            this.head = (this.head  + 1) % this.length;
+            return true;
+        };
+
+        /**
+        * @return {number}
+        */
+        MyCircularQueue.prototype.Front = function() {
+            return !this.isEmpty() ? this.queue[this.head]: -1;
+        };
+
+        /**
+        * @return {number}
+        */
+        MyCircularQueue.prototype.Rear = function() {
+            const lastIndex = (this.tail - 1 + this.length) % this.length;
+            return this.queue[lastIndex] !== null ? this.queue[lastIndex] : -1;
+        };
+
+        /**
+        * @return {boolean}
+        */
+        MyCircularQueue.prototype.isEmpty = function() {
+            return this.queue[this.head] === null; 
+        };
+
+        /**
+        * @return {boolean}
+        */
+        MyCircularQueue.prototype.isFull = function() {
+            return this.queue[this.tail] !== null;
+        };
+
+        /**
+        * Your MyCircularQueue object will be instantiated and called as such:
+        * var obj = new MyCircularQueue(k)
+        * var param_1 = obj.enQueue(value)
+        * var param_2 = obj.deQueue()
+        * var param_3 = obj.Front()
+        * var param_4 = obj.Rear()
+        * var param_5 = obj.isEmpty()
+        * var param_6 = obj.isFull()
+        */
+        let circularQueue = new MyCircularQueue(3);
+        console.log("enQueue1", circularQueue.enQueue(1));  // 返回 true
+        console.log("enQueue2", circularQueue.enQueue(2));  // 返回 true
+        console.log("enQueue3", circularQueue.enQueue(3));  // 返回 true
+        console.log("enQueue4", circularQueue.enQueue(4));  // 返回 false，队列已满
+        console.log("rear3", circularQueue.Rear());
+        console.log("isFull", circularQueue.isFull());
+        console.log("deQueue1", circularQueue.deQueue());
+        console.log("enQueue4", circularQueue.enQueue(4))
+        console.log("Rear4", circularQueue.Rear());
+    </script>
+</body>
+</html>

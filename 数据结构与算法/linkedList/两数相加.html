@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>两数相加</title>
+</head>
+<body>
+    <script>
+        function ListNode(val, next) {
+            this.val = (val===undefined ? 0 : val)
+            this.next = (next===undefined ? null : next)
+        }
+        // let node1 = new ListNode(2);
+        // let node2 = new ListNode(4);
+        // let node3 = new ListNode(3);
+        // let node4 = new ListNode(5);
+        // let node5 = new ListNode(6);
+        // let node6 = new ListNode(4);
+        // node1.next = node2;
+        // node2.next = node3;
+        // node4.next = node5;
+        // node5.next = node6;
+        // let l1 = node1;
+        // let l2 = node4;
+
+        let node11 = new ListNode(9);
+        let node12 = new ListNode(9);
+        let node13 = new ListNode(9);
+        let node14 = new ListNode(9);
+        let node15 = new ListNode(9);
+        let node16 = new ListNode(9);
+        let node17 = new ListNode(9);
+        node11.next = node12;
+        node12.next = node13;
+        node13.next = node14;
+        node14.next = node15;
+        node15.next = node16;
+        node16.next = node17;
+        let node21 = new ListNode(9);
+        let node22 = new ListNode(9);
+        let node23 = new ListNode(9);
+        let node24 = new ListNode(9);
+        node21.next = node22;
+        node22.next = node23;
+        node23.next = node24;
+        let l1 = node11;
+        let l2 = node21;
+        /**
+        * Definition for singly-linked list.
+        * function ListNode(val, next) {
+        *     this.val = (val===undefined ? 0 : val)
+        *     this.next = (next===undefined ? null : next)
+        * }
+        */
+        /**
+        * @param {ListNode} l1
+        * @param {ListNode} l2
+        * @return {ListNode}
+        */
+        // [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]
+        // [5,6,4]
+        // var addTwoNumbers = function(l1, l2) {
+        //     let pow = 0;
+        //     let pointer1 = l1;
+        //     let pointer2 = l2;
+        //     let sum = 0;
+        //     let dummy = new ListNode(null);
+        //     let cur = dummy;
+        //     while (pointer1 && pointer2) {
+        //         sum += pointer1.val * Math.pow(10, pow) + pointer2.val * Math.pow(10, pow);
+        //         pow++;
+        //         pointer1 = pointer1.next;
+        //         pointer2 = pointer2.next;
+        //     }
+        //     while (pointer1) {
+        //         sum += pointer1.val * Math.pow(10, pow);
+        //         pow++;
+        //         pointer1 = pointer1.next;
+        //     }
+        //     while (pointer2) {
+        //         sum += pointer2.val * Math.pow(10, pow);
+        //         pow++;
+        //         pointer2 = pointer2.next;
+        //     }
+        //     let arr = sum.toString().split("").reverse();
+        //     for (let i = 0; i < arr.length; i++) {
+        //         let node = new ListNode(Number(arr[i]));
+        //         cur.next = node;
+        //         cur = cur.next;
+        //     }
+        //     return dummy.next;
+        // };
+        var addTwoNumbers = function(l1, l2) {
+            let head = new ListNode(0);
+            let curNode = head;
+            while (l1 || l2) {
+                let cur1 = l1 ? l1.val : 0;
+                let cur2 = l2 ? l2.val : 0;
+                let sum = cur1 + cur2 + curNode.val;
+                curNode.val = sum % 10;
+                curNode.next = new ListNode(sum > 9 ? 1 : 0);
+                if (!(l1 && l1.next) && !(l2 && l2.next) && sum < 10) {
+                    curNode.next = null;
+                }
+                curNode = curNode.next;
+                l1 = l1 ? l1.next : null;
+                l2 = l2 ? l2.next : null;
+            }
+            return head;
+        };
+        console.log(addTwoNumbers(l1, l2));
+    </script>
+</body>
+</html>

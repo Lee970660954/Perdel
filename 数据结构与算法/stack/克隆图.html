@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>克隆图</title>
+</head>
+<body>
+    <script>
+        /**
+        * // Definition for a Node.
+        * function Node(val, neighbors) {
+        *    this.val = val === undefined ? 0 : val;
+        *    this.neighbors = neighbors === undefined ? [] : neighbors;
+        * };
+        */
+
+        /**
+        * @param {Node} node
+        * @return {Node}
+        */
+        var cloneGraph = function(node) {
+            if (!node) {
+                return null;
+            }
+            const visitedMap = new Map();
+            const dfs = n => {
+                const cNode = new Node(n.val);
+                visitedMap.set(n, cNode);
+                (n.neighbors || []).map(item => {
+                    if (!visitedMap.has(item)) {
+                        dfs(item);
+                    }
+                    cNode.neighbors.push(visitedMap.get(item));
+                })
+            }
+            dfs(node);
+            return visitedMap.get(node);
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>逆波兰表达式求值</title>
+</head>
+<body>
+    <script>
+        // let tokens = ["2","1","+","3","*"];
+        // let tokens = ["4","13","5","/","+"];
+        // let tokens = ["10","6","9","3","+","-11","*","/","*","17","+","5","+"];
+        // let tokens = ["18"];
+        let tokens = ["4","-2","/","2","-3","-","-"];
+        /**
+        * @param {string[]} tokens
+        * @return {number}
+        */
+        var evalRPN = function(tokens) {
+            const stack = [];
+            const operatorSet = new Set(["+", "-", "*", "/"]);
+            if (tokens.length <= 1) {
+                return parseInt(tokens[0]);
+            }
+            for (let i = 0; i < tokens.length; i++) {
+                if (!operatorSet.has(tokens[i])) {
+                    stack.push(tokens[i]);
+                } else {
+                    let num1 = stack.pop();
+                    let num2 = stack.pop();
+                    let res = parseInt(eval(`(${num2})${tokens[i]}(${num1})`));
+                    stack.push(res);
+                }
+            }
+            return stack.pop();
+        };
+        console.log(evalRPN(tokens))
+    </script>
+</body>
+</html>

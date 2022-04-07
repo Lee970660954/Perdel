@@ -7,7 +7,7 @@
     <title>设计链表</title>
 </head>
 <body>
-    <script>
+    <!-- <script>
         var Node = function (val) {
             this.val = val;
             this.next = null;
@@ -155,6 +155,200 @@
         linkedList.addAtIndex(1,30);
         let idx0 = linkedList.get(0);
         console.log(idx0)
+    </script> -->
+
+    <script>
+        var Node = function (val) {
+            this.val = val;
+            this.next = null;
+            this.prev = null;
+        }
+
+        var MyLinkedList = function() {
+            this.head = null;
+        };
+
+        /** 
+        * @param {number} index
+        * @return {number}
+        */
+        MyLinkedList.prototype.get = function(index) {
+            let length = 0;
+            let cur = this.head;
+            let count = 0;
+            while (cur) {
+                length++;
+                cur = cur.next;
+            }
+            cur = this.head;
+            if (index < 0 || index >= length) {
+                return -1;
+            } else {
+                while (cur) {
+                    if (index === count) {
+                        return cur.val;
+                    }
+                    count++;
+                    cur = cur.next;
+                }
+            }
+        };
+
+        /** 
+        * @param {number} val
+        * @return {void}
+        */
+        MyLinkedList.prototype.addAtHead = function(val) {
+            const node = new Node(val);
+            if (this.head) {
+                this.head.prev = node;
+            }
+            node.next = this.head;
+            this.head = node;
+        };
+
+        /** 
+        * @param {number} val
+        * @return {void}
+        */
+        MyLinkedList.prototype.addAtTail = function(val) {
+            const node = new Node(val);
+            if (!this.head) {
+                this.head = node;
+            } else {
+                let cur = this.head;
+                while (cur && cur.next) {
+                    cur = cur.next;
+                }
+                node.prev = cur;
+                cur.next = node;
+            }
+        };
+
+        /** 
+        * @param {number} index 
+        * @param {number} val
+        * @return {void}
+        */
+        MyLinkedList.prototype.addAtIndex = function(index, val) {
+            const node = new Node(val);
+            let length = 0;
+            let count = 0;
+            let cur = this.head;
+            while (cur) {
+                length++;
+                cur = cur.next;
+            }
+            cur = this.head;
+            if (index <= 0) {
+                this.addAtHead(val);
+            } else if (index === length) {
+                this.addAtTail(val);
+            } else if (index > 0 && index < length) {
+                while (cur) {
+                    if (count === index) {
+                        node.next = cur;
+                        node.prev = cur.prev;
+                        cur.prev.next = node;
+                        cur.prev = node;
+                        return;
+                    }
+                    count++;
+                    cur = cur.next;
+                }
+            }
+        };
+
+        /** 
+        * @param {number} index
+        * @return {void}
+        */
+        MyLinkedList.prototype.deleteAtIndex = function(index) {
+            let length = 0;
+            let cur = this.head;
+            let count = 0;
+            while (cur) {
+                length++;
+                cur = cur.next;
+            }
+            cur = this.head;
+            if (index >= 0 && index < length) {
+                if (length === 1) {
+                    this.head = null;
+                    return;
+                }
+                while (cur) {
+                    if (count === index) {
+                        if (index === 0) {
+                            let newHead = cur.next;
+                            cur.next.prev = null;
+                            this.head = newHead;
+                        } else if (index === length - 1) {
+                            cur.prev.next = null;
+                            cur.prev = null;
+                        } else {
+                            cur.prev.next = cur.next;
+                            cur.next.prev = cur.prev;
+                        }
+                        return;
+                    }
+                    count++;
+                    cur = cur.next;
+                }
+            }
+        };
+        // const linkedList = new MyLinkedList();
+        // linkedList.addAtHead(1);
+        // linkedList.addAtTail(3);
+        // linkedList.addAtIndex(1, 2);
+        // let idx1 = linkedList.get(1);
+        // console.log("idx1", idx1);
+        // linkedList.deleteAtIndex(1)
+        // idx1 = linkedList.get(1);
+        // console.log("idx1", idx1);
+        // console.log("linkedList", linkedList);
+
+
+        // const linkedList = new MyLinkedList();
+        // linkedList.addAtHead(1);
+        // linkedList.deleteAtIndex(0);
+        // console.log("linkedList", linkedList);
+
+        // const linkedList = new MyLinkedList();
+        // linkedList.addAtHead(1);
+        // linkedList.addAtTail(3);
+        // linkedList.addAtIndex(1, 2);
+        // let idx1 = linkedList.get(1);
+        // console.log("idx1", idx1);
+        // linkedList.deleteAtIndex(0);
+        // let idx0 = linkedList.get(0);
+        // console.log("idx0", idx0);
+        // linkedList.deleteAtIndex(0);
+        // console.log("linkedList", linkedList);
+
+        const linkedList = new MyLinkedList();
+        linkedList.addAtHead(2);
+        linkedList.deleteAtIndex(1);
+        linkedList.addAtHead(2);
+        linkedList.addAtHead(7);
+        linkedList.addAtHead(3);
+        linkedList.addAtHead(2);
+        linkedList.addAtHead(5);
+        linkedList.addAtTail(5);
+        let idx5 = linkedList.get(5);
+        console.log("idx5", idx5);
+        linkedList.deleteAtIndex(6);
+        linkedList.deleteAtIndex(4);
+        console.log("linkedList", linkedList);
+        /**
+        * Your MyLinkedList object will be instantiated and called as such:
+        * var obj = new MyLinkedList()
+        * var param_1 = obj.get(index)
+        * obj.addAtHead(val)
+        * obj.addAtTail(val)
+        * obj.addAtIndex(index,val)
+        * obj.deleteAtIndex(index)
+        */
     </script>
 </body>
 </html>

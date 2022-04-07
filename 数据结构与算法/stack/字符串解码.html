@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>字符串解码</title>
+</head>
+<body>
+    <script>
+        // let s = "3[a]2[bc]";
+        let s = "3[a2[c]]";
+        /**
+        * @param {string} s
+        * @return {string}
+        */
+        var decodeString = function(s) {
+            const isNumber = new Set(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]);
+            const stack = [];
+            let num = 0;
+            s = s.split("");
+            for (let item of s) {
+                if (isNumber.has(item)) {
+                    num = num * 10 + parseInt(item);
+                } else if (item === "[") {
+                    stack.push(num);
+                    stack.push(item);
+                    num = 0;
+                } else if (item !== "]") {
+                    stack.push(item);
+                } else {
+                    let sArr = [];
+                    while (true) {
+                        let cur = stack.pop();
+                        if (cur === "[") {
+                            break;
+                        } else {
+                            sArr.unshift(cur);
+                        }
+                    }
+                    let tempN = stack.pop();
+                    let tempS = sArr.join("");
+                    stack.push(tempS.repeat(tempN));
+                }
+            }
+            return stack.join("");
+        }
+        console.log(decodeString(s))
+    </script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>旋转链表</title>
+</head>
+<body>
+    <script>
+        function ListNode(val, next) {
+            this.val = (val===undefined ? 0 : val)
+            this.next = (next===undefined ? null : next)
+        }
+        let node1 = new ListNode(1);
+        let node2 = new ListNode(2);
+        let node3 = new ListNode(3);
+        let node4 = new ListNode(4);
+        let node5 = new ListNode(5);
+        node1.next = node2;
+        node2.next = node3;
+        node3.next = node4;
+        node4.next = node5;
+        let head = node1;
+        /**
+        * Definition for singly-linked list.
+        * function ListNode(val, next) {
+        *     this.val = (val===undefined ? 0 : val)
+        *     this.next = (next===undefined ? null : next)
+        * }
+        */
+        /**
+        * @param {ListNode} head
+        * @param {number} k
+        * @return {ListNode}
+        */
+        var rotateRight = function(head, k) {
+            let length = 0;
+            let cur = head;
+            let count = 0;
+            let newHead = head;
+            while (cur) {
+                length++;
+                cur = cur.next;
+            }
+            cur = head;
+            k = k % length;
+            if (k > 0) {
+                while (count < length - k - 1) {
+                    cur = cur.next;
+                    count++;
+                }
+                newHead = cur.next;
+                cur.next = null;
+                cur = newHead;
+                while (cur && cur.next) {
+                    cur = cur.next;
+                }
+                cur.next = head;
+            }
+            return newHead;
+        };
+        console.log(rotateRight(head, 6))
+    </script>
+</body>
+</html>

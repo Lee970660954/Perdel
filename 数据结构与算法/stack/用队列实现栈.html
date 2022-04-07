@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用队列实现栈</title>
+</head>
+<body>
+    <script>
+        var MyStack = function() {
+            this.queue1 = [];
+            this.queue2 = [];
+        };
+
+        /** 
+        * @param {number} x
+        * @return {void}
+        */
+        MyStack.prototype.push = function(x) {
+            if (this.queue2.length) {
+                this.queue2.push(x);
+            } else {
+                this.queue1.push(x);
+            }
+        };
+
+        /**
+        * @return {number}
+        */
+        MyStack.prototype.pop = function() {
+            if (!this.queue2.length) {
+                while (this.queue1.length > 1) {
+                    this.queue2.push(this.queue1.shift());
+                }
+                return this.queue1.shift();
+            }
+            if (!this.queue1.length) {
+                while (this.queue2.length > 1) {
+                    this.queue1.push(this.queue2.shift());
+                }
+                return this.queue2.shift();
+            }
+        };
+
+        /**
+        * @return {number}
+        */
+        MyStack.prototype.top = function() {
+            if (!this.queue2.length) {
+                return this.queue1[this.queue1.length - 1];
+            }
+            if (!this.queue1.length) {
+                return this.queue2[this.queue2.length - 1];
+            }
+        };
+
+        /**
+        * @return {boolean}
+        */
+        MyStack.prototype.empty = function() {
+            return (this.queue1.length === 0) && (this.queue2.length === 0);
+        };
+
+        /**
+        * Your MyStack object will be instantiated and called as such:
+        * var obj = new MyStack()
+        * obj.push(x)
+        * var param_2 = obj.pop()
+        * var param_3 = obj.top()
+        * var param_4 = obj.empty()
+        */
+        const myStack = new MyStack();
+        myStack.push(1);
+        myStack.push(2);
+        console.log(myStack.top()); // 返回 2
+        console.log(myStack.pop()); // 返回 2
+        myStack.push(3);
+        console.log(myStack.pop()); // 返回 3
+        console.log(myStack.empty()); // 返回 False
+    </script>
+</body>
+</html>

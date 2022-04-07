@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>打开转盘锁</title>
+</head>
+<body>
+    <script>
+        var deadends = ["0201","0101","0102","1212","2002"]; 
+        var target = "0202";
+        /**
+        * @param {string[]} deadends
+        * @param {string} target
+        * @return {number}
+        */
+        var forward = function (str, idx) {
+            const arr = str.split("");
+            if (arr[idx] === "9") {
+                arr[idx] = "0";
+            } else {
+                arr[idx] = +arr[idx] + 1;
+            }
+            return arr.join("");
+        }
+        var back = function (str, idx) {
+            const arr = str.split("");
+            if (arr[idx] === "0") {
+                arr[idx] = "9";
+            } else {
+                arr[idx] = +arr[idx] - 1;
+            }
+            return arr.join("");
+        }
+        var openLock = function(deadends, target) {
+            const deadSet = new Set(deadends);
+            const queue = ["0000"];
+            const visitedSet = new Set(["0000"]);
+            let step = 0;
+            while (queue.length) {
+                const size = queue.length;
+                for (let i = 0; i < size; i++) {
+                    const cur = queue.shift();
+                    if (deadSet.has(cur)) {
+                        continue;
+                    } else if (cur === target) {
+                        return step;
+                    }
+                    for (let j = 0; j < cur.length; j++) {
+                        let f = forward(cur, j);
+                        if (!visitedSet.has(f)) {
+                            visitedSet.add(f);
+                            queue.push(f);
+                        }
+                        let b = back(cur, j);
+                        if (!visitedSet.has(b)) {
+                            visitedSet.add(b);
+                            queue.push(b);
+                        }
+                    }
+                }
+                step++;
+            }
+            return -1;
+        };
+        console.log(openLock(deadends, target));
+    </script>
+</body>
+</html>

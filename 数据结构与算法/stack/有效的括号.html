@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>有效的括号</title>
+</head>
+<body>
+    <script>
+        // let s = "()[]{}";
+        // let s = "([)]";
+        let s = "((";
+        /**
+        * @param {string} s
+        * @return {boolean}
+        */
+        var isValid = function(s) {
+            if (s.length <= 1) {
+                return false;
+            }
+            const stack = [];
+            const lvMap = new Map();
+            lvMap.set("(", ")");
+            lvMap.set("[", "]");
+            lvMap.set("{", "}");
+            for (let i = 0; i < s.length; i++) {
+                if (lvMap.has(s[i])) {
+                    stack.push(lvMap.get(s[i]))
+                } else {
+                    let top = stack.pop();
+                    if (top !== s[i]) {
+                        return false;
+                    }
+                }
+            }
+            if (stack.length) {
+                return false;
+            }
+            return true;
+        };
+        console.log(isValid(s));
+    </script>
+</body>
+</html>
